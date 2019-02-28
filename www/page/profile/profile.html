@@ -1,0 +1,277 @@
+
+<style type="text/css">
+    .img-avatar {
+        border: 1px solid #174952;
+
+    }
+    .margin-right {
+        margin-right: 5px;
+    }
+
+    .thumbnail {
+        margin-bottom: 5px;
+    }
+    .tb-profile {
+        font-size: 15px;
+        /*font-weight: bold;*/
+    }
+
+    .tb-profile:hover {
+        background: #f3f3f3;
+        cursor: pointer;
+    }
+
+    .tb-profile .col-xs-2 {
+        border-right: 1px solid #cccccc;
+        text-align: center;
+
+    }
+
+    .tb-profile .col-xs-2 .fa {
+        color: #174952;
+    }
+
+    hr {
+        border-bottom: 1px solid #9e9e9ea6;
+    }
+
+    .btnProfile {
+        font-size: 15px;
+    }
+</style>
+
+<div class="container" style="margin-top: 30px;margin-bottom: 20px;">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div style="text-align: center;margin-bottom: 20px;">
+                <img data-src="../../images/icon/no_image.png" class="img-circle img-fitter img-avatar" width="70" height="70">
+                <h3 id="viewUser"></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="thumbnail tb-profile" data-page="detailprofile" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        Profile
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumbnail tb-profile hide" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-shopping-basket"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        My Order
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumbnail tb-profile" data-page="listuser" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        List Users
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumbnail tb-profile" data-page="emergency_contact" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-volume-control-phone"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        Emergency Contact
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumbnail tb-profile" data-page="faq" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-info-circle"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        FAQ
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumbnail tb-profile hide" style="min-height: 20px;padding: 10px;">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-envelope-o"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        Invite Friend
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+
+            <button class="btn btn-block btn-info btnProfile" onclick="show2callEmgrcy();">Call Emergency Contact</button>
+
+            <button class="btn btn-block btn-danger btnProfile" onclick="modalLogOut();" style="">Log Out</button>
+
+            <hr/>
+
+
+            <!--<div class="thumbnail tb-profile" data-page="logOut" style="min-height: 20px;padding: 10px;">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-2">-->
+                        <!--<i class="fa fa-sign-out" style="color: red;"></i>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-10">-->
+                        <!--Log Out-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // $('#hhhh').html(Customer_ID);
+        loadProfile();
+
+        $('.img-fitter').imgFitter({
+            // CSS background position
+            backgroundPosition: 'center center',
+            // for image loading effect
+            fadeinDelay: 400,
+            fadeinTime: 1200
+        });
+        
+    });
+
+    function loadProfile(){
+
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'profile';
+
+        loading_button('#btnActionCallEmrg');
+        $('button[data-dismiss=modal]').prop('disabled',true);
+
+        $.ajax(setting_api).done(function (result) {
+            var dataProfile = JSON.parse(result);
+            console.log(dataProfile);
+            var name = dataProfile.nama_depan.trim()+' '+dataProfile.nama_belakang.trim();
+            $('#viewUser').html(ucwords(name)+'<br/><small>Username : '+dataProfile.username+' ' +
+                '<span class="label label-warning" style="font-weight: normal;padding-top: 7px;padding-bottom: 7px;">Point : '+dataProfile.point+'</span></small>');
+        });
+
+
+        // db.transaction(function(tx) {
+        //     tx.executeSql('SELECT * FROM db_user', [], function(tx, rs) {
+        //         if(rs.rows.length>0){
+        //
+        //             for(var i=0;i<rs.rows.length;i++){
+        //                 if(dencryption(rs.rows.item(i).description)=='profile'){
+        //                     var token = rs.rows.item(i).token;
+        //                     var dataProfile = JSON.parse(jwt_decode(token,keyS+''+keyS));
+        //
+        //                     console.log(dataProfile);
+        //                     var name = dataProfile.nama_depan.trim()+' '+dataProfile.nama_belakang.trim();
+        //                     $('#viewUser').html(ucwords(name)+'<br/><small>Username : '+dataProfile.username+'</small>');
+        //                     break;
+        //                 }
+        //             }
+        //
+        //         }
+        //     }, function(tx, e) {
+        //         // console.log('SELECT error: ' + e.message);
+        //         reject(e.message);
+        //     });
+        // });
+    }
+
+    function modalLogOut(){
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<div style="text-align: center;">' +
+            '    Are you sure to log out?' +
+            '    <hr/>' +
+            '    <button class="btn btn-danger" id="btnYesLogOut">Yes</button> | ' +
+            '<button class="btn btn-default" data-dismiss="modal">No</button>' +
+            '</div>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+    }
+
+    function show2callEmgrcy(){
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<div style="text-align: center;">' +
+            '    Call emergency?' +
+            '    <hr/>' +
+            '    <button class="btn btn-warning" id="btnActionCallEmrg">Yes</button> | ' +
+            '<button class="btn btn-default" data-dismiss="modal">No</button>' +
+            '</div>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+    }
+
+    $(document).on('click','#btnActionCallEmrg',function () {
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'emergency';
+
+        loading_buttonSM('#btnActionCallEmrg');
+        $('button[data-dismiss=modal]').prop('disabled',true);
+
+        $.ajax(setting_api).done(function (result) {
+            toastr.success('Called');
+            setInterval(function () {
+                $('#myModal').modal('hide');
+            },500);
+        });
+    });
+
+    $(document).on('click','.tb-profile',function () {
+       var page = $(this).attr('data-page');
+       if(page=='logOut'){
+           modalLogOut();
+       } else {
+           window.location.replace('template_customer.html?page=profile&b_tb=true&subpage='+page);
+
+           var dataURLBack = {
+               URL : 'template_customer.html?page=profile&b_m=true',
+               URL2 : '',
+               Level : 1
+           };
+           localStorage.setItem('URLBack',JSON.stringify(dataURLBack));
+       }
+    });
+    
+    $(document).on('click','#btnYesLogOut',function () {
+        loading_buttonSM('#btnYesLogOut');
+        $('button[data-dismiss=modal]').prop('disabled',true);
+        localStorage.removeItem('fascy');
+        localStorage.removeItem('hascy');
+        localStorage.removeItem('token');
+        provid_logOut();
+        setTimeout(function () {
+            window.location.replace('../template/splash.html');
+        },500);
+    });
+
+</script>

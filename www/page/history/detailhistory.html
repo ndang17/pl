@@ -1,0 +1,569 @@
+
+<style>
+    body {
+        padding-top: 0px;
+    }
+
+    #divContact .col-xs-3{
+        padding: 0px;
+    }
+    #divContact .thumbnail{
+        margin-bottom: 0px;
+        margin-top: 10px;
+    }
+
+    #divContact .thumbnail .fa{
+        font-size: 20px;
+    }
+    .contact-drv .thumbnail {
+        border: 1px solid #8ca3cf;
+        border-radius: 15px;
+
+    }
+
+    .header-modal {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #cccccc;
+        text-align: center;
+    }
+    #viewBintang {
+        text-align: center;
+    }
+    .btn-start {
+        border-radius: 35px;
+        padding: 2px 7px 2px 7px;
+        font-size: 19px;
+        border: 1px solid #505050 !important;
+    }
+</style>
+
+<nav id="navbar_Back" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="template_customer.html?page=history&b_m=true">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="choice" style="margin-top: 70px;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2" style="color: #377f8d;">
+            <div class="thumbnail" style="min-height: 40px;padding: 10px;">
+                <table class="table" style="margin-bottom: 3px;">
+                    <tr>
+                        <td style="width: 15%;">Kota</td>
+                        <td style="width: 1%;">:</td>
+                        <td id="viewKota"></td>
+                    </tr>
+                    <tr>
+                        <td>Preference</td>
+                        <td>:</td>
+                        <td id="viewPreference"></td>
+                    </tr>
+                    <tr>
+                        <td>Arrive On</td>
+                        <td>:</td>
+                        <td id="viewArriveOn"></td>
+                    </tr>
+                    <tr>
+                        <td>Leave On</td>
+                        <td>:</td>
+                        <td id="viewLeaveOn"></td>
+                    </tr>
+                    <tr>
+                        <td>Adult</td>
+                        <td>:</td>
+                        <td id="viewAdult"></td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<td>Child</td>-->
+                        <!--<td>:</td>-->
+                        <!--<td>2</td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <td>Language</td>
+                        <td>:</td>
+                        <td id="viewLanguage"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center;background: #f9f9f9;">Pick-Up Services</td>
+                    </tr>
+                    <tr>
+                        <td>Location</td>
+                        <td>:</td>
+                        <td id="viewLoacation"></td>
+                    </tr>
+                    <tr>
+                        <td>Time</td>
+                        <td>:</td>
+                        <td id="viewTime"></td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="3" style="text-align: center;background: #f9f9f9;">Special Requirement</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" id="viewSpecialRequirement"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="text-align: center;background: #f9f9f9;">Customer</td>
+                    </tr>
+                    <tbody id="showCustomer"></tbody>
+
+                    <tr id="trPayment">
+                        <td colspan="3">
+                            <button class="btn btn-block btn-primary" id="showPaymentStatusMid">Payment Status</button>
+                        </td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td colspan="3" id="viewStatusOrder"></td>
+                    </tr>
+
+
+                </table>
+            </div>
+
+
+            <div class="thumbnail hide" id="panelDriver" style="padding: 15px;">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table" style="margin-bottom: 0px;">
+                            <tr>
+                                <td colspan="2" style="background: #f9f9f9;">Driver</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;width: 29%;">
+                                    <img src="../../images/icon/driver.png" style="max-width: 50px;width: 100%;">
+                                </td>
+                                <td>
+                                    <h4 style="margin-bottom: 0px;margin-top: 3px;" id="drv_viewName"></h4>
+                                    <i class="fa fa-phone margin-right"></i> <span id="drv_viewNoHP"></span>
+                                    <br/>
+                                    <i class="fa fa-envelope-o margin-right"></i> <span id="drv_viewEmail"></span>
+                                    <br/>
+                                    <i class="fa fa-car margin-right"></i> <span id="drv_viewMobil"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <div class="" id="divContact">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <a href="#" class="contact-drv" id="drv_telp">
+                                                    <div class="thumbnail">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                                        <br/>
+                                                        Call
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <a href="#" class="contact-drv" id="drv_sms">
+                                                    <div class="thumbnail">
+                                                        <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                                                        <br/>
+                                                        SMS
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <a href="#" class="contact-drv" id="drv_email">
+                                                    <div class="thumbnail">
+                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                        <br/>
+                                                        E-mail
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <a href="#" class="contact-drv" id="drv_wa">
+                                                    <div class="thumbnail">
+                                                        <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                                        <br/>
+                                                        Whatsup
+                                                    </div>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="thumbnail hide" id="viewAskRate" style="padding: 15px;">
+                <button class="btn btn-success btn-block" id="btnTourFinished">Tour Finished</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getDateTimeServer();
+        loadDataDetails();
+    });
+
+    function loadDataDetails() {
+
+        var detailTr = localStorage.getItem('details-transaksi');
+
+        var dataDetails = jwt_decode(detailTr,keyS);
+
+        var labelPrimary = [1,5];
+        var LabelSuccess = [2];
+        var LabelDanger = [3,6,7,10,11,12];
+        var labelDefault = [8,9];
+        var labelWarning = [4];
+
+        var IDTR = dataDetails.statusTransaksiIdStatusTransaksi.id_status_transaksi;
+        var label = 'default'
+
+        var ShowDriver = 0;
+
+        if($.inArray(IDTR,labelPrimary)!=-1){
+            label = 'primary';
+            $('#trPayment').remove();
+            ShowDriver = (IDTR==1 || IDTR=='1') ? 1 : 0;
+
+        } else if($.inArray(IDTR,LabelSuccess)!=-1){
+            label = 'success';
+            $('#trPayment').remove();
+            ShowDriver = 1;
+        } else if($.inArray(IDTR,LabelDanger)!=-1){
+            label = 'danger';
+            $('#trPayment').remove();
+        } else if($.inArray(IDTR,labelWarning)!=-1){
+            label = 'warning';
+        } else if($.inArray(IDTR,labelDefault)!=-1){
+            label = 'warning';
+            $('#trPayment').remove();
+        }
+
+        $('#viewStatusOrder').html('<span class="label label-'+label+'" style="font-size: 13px;">'+dataDetails.statusTransaksiIdStatusTransaksi.nama_status_transaksi+'</span>');
+
+        $('#viewKota').html(dataDetails.daftarKotaIdDaftarKota.keterangan_kota);
+
+        var pref = '';
+        if(dataDetails.prefereablePlaceIdPrefereablePlaces.length>0){
+            for(var p=0;p<dataDetails.prefereablePlaceIdPrefereablePlaces.length;p++){
+                var koma = (p!=0)? ', ' : '';
+                pref = pref+''+koma+''+dataDetails.prefereablePlaceIdPrefereablePlaces[p].keterangan;
+            }
+        }
+
+        $('#viewPreference').html(pref);
+        $('#viewArriveOn').html(moment(dataDetails.arrive_on).format('ddd, DD MMM YYYY'));
+        $('#viewLeaveOn').html(moment(dataDetails.leave_on).format('ddd, DD MMM YYYY'));
+
+        $('#viewAdult').html(dataDetails.jumlah_detail_orang);
+
+        var lang = '';
+        if(dataDetails.daftarBahasaIDDaftarBahasa.length>0){
+            for(var l=0;l<dataDetails.daftarBahasaIDDaftarBahasa.length;l++){
+                var koma = (l!=0) ? ', ' : '';
+                lang = lang+''+koma+''+dataDetails.daftarBahasaIDDaftarBahasa[l].keterangan_bahasa;
+            }
+        }
+
+        $('#viewLanguage').html(lang);
+
+        $('#viewLoacation').html(dataDetails.lokasi_penjemputan);
+        $('#viewTime').html(dataDetails.waktu_penjemputan);
+
+        var Requirement = (dataDetails.special_requirement!='' && dataDetails.special_requirement!=null)
+            ? dataDetails.special_requirement : '-';
+        $('#viewSpecialRequirement').html(Requirement);
+
+        if(dataDetails.detailTransaksis.length>0){
+            for(var u=0;u<dataDetails.detailTransaksis.length;u++){
+                var d_us = dataDetails.detailTransaksis[u];
+                $('#showCustomer').append('<tr>' +
+                    '                        <td colspan="3">'+d_us.nama_depan.trim()+' '+d_us.nama_belakang.trim()+' ' +
+                    '<div style="float: right;"><button data-index="'+u+'" class="btn btn-sm btn-default showDetailCustomer">Details</button></div>' +
+                    '                        </td>' +
+                    '                    </tr>');
+            }
+        }
+
+        // $('').html('<span class="label label-\'+label+\'">\'+d.statusTransaksiIdStatusTransaksi.nama_status_transaksi+\'</span></td>\' +');
+
+        $('#showPaymentStatusMid').attr('data-snaptoken',dataDetails.snap_token);
+
+
+
+        // Load Driver
+        // Cek apakah status tidak sama dengan Waiting payment / menungu bid / status batal
+        if(ShowDriver==1 || ShowDriver=='1'){
+            $('#panelDriver').removeClass('hide');
+            var dataDriver = dataDetails.kelengkapanDokumen;
+            var dataDriver_loc = dataDetails.kelengkapanDokumen.userLocalGuideDriver;
+            $('#drv_viewName').html(ucwords(dataDriver.nama_depan.trim())+' '+dataDriver.nama_belakang.trim());
+            $('#drv_viewNoHP').html(dataDriver_loc.nomor_handphone);
+            $('#drv_viewEmail').html(dataDriver_loc.email);
+            $('#drv_viewMobil').html(dataDriver_loc.merkMobil.keterangan_merk_mobil+' <span class="label label-default" style="position: relative;left: 0px;">'+dataDriver.plat_nomor+'</span>');
+
+            // Contact
+            $('#drv_telp').attr('href','tel:'+dataDriver_loc.nomor_handphone);
+            $('#drv_sms').attr('href','sms:'+dataDriver_loc.nomor_handphone);
+
+            $('#drv_email').attr('href','mailto:'+dataDriver_loc.email);
+            $('#drv_wa').attr('href','https://wa.me/'+dataDriver_loc.nomor_handphone);
+        } else {
+            $('#panelDriver').remove();
+        }
+
+
+        // Cocokan dengan waktu server
+        var waktuServer = localStorage.getItem('DateTimeNow');
+        var Date = waktuServer.split(' ')[0].trim();
+
+        var m_DateNow = moment(Date);
+        var m_ExpDate = moment(dataDetails.leave_on).add(1,'d').format('YYYY-MM-DD');
+
+        if(Date == m_ExpDate|| m_DateNow.isAfter(m_ExpDate)){
+
+            var giveRatingGuide = localStorage.getItem('giveRatingGuide');
+
+            if(typeof  giveRatingGuide !== 'undefined'
+                && giveRatingGuide!=''
+                && giveRatingGuide!=null){
+
+                var dGive = JSON.parse(giveRatingGuide);
+
+                if($.inArray(dataDetails.id_transaksi,dGive)!=-1){
+                    $('#viewAskRate').remove();
+                    $('#viewAskRate').prop('disabled',false);
+                } else {
+                    $('#viewAskRate').removeClass('hide');
+                }
+
+            } else {
+                $('#viewAskRate').removeClass('hide');
+            }
+
+
+        } else {
+            $('#viewAskRate').remove();
+            $('#viewAskRate').prop('disabled',false);
+        }
+
+
+    }
+
+    $(document).on('click','#showPaymentStatusMid',function () {
+        var snapToken = $('#showPaymentStatusMid').attr('data-snaptoken');
+
+        snap.pay(snapToken, {
+            // Optional
+            onSuccess: function (result) {
+                /* You may add your own js here, this is just example */
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            },
+            // Optional
+            onPending: function (result) {
+                /* You may add your own js here, this is just example */
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            },
+            // Optional
+            onError: function (result) {
+                /* You may add your own js here, this is just example */
+                // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            }
+        });
+    });
+
+    $(document).on('click','.showDetailCustomer',function () {
+
+        var detailTr = localStorage.getItem('details-transaksi');
+        var dataDetails = jwt_decode(detailTr,keyS);
+
+        var DataIndex = $(this).attr('data-index');
+
+        var d = dataDetails.detailTransaksis[DataIndex];
+
+        var Name = d.panggilanIdPanggilan.keterangan_panggilan+' '+d.nama_depan.trim()+' '+d.nama_belakang.trim();
+
+        var ektp = (d.nomor_identitas_ektp!='' && d.nomor_identitas_ektp!=null)
+            ? d.nomor_identitas_ektp
+            : '-';
+        var visa  = (d.nomor_identitas_visa!='' && d.nomor_identitas_visa!=null)
+            ? d.nomor_identitas_visa
+            : '-';
+        var passport  = (d.nomor_identitas_passport!='' && d.nomor_identitas_passport!=null)
+            ? d.nomor_identitas_passport
+            : '-';
+
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<div>' +
+            '<table class="table table-striped">' +
+            '<tr>' +
+            '    <td style="width: 35%;">Name</td>' +
+            '    <td style="width: 1%;">:</td>' +
+            '    <td>'+Name+' </td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>Gender</td>' +
+            '   <td>:</td>' +
+            '   <td>'+d.jenisKelaminIdJenisKelamin.keterangan_jenis_kelamin+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>Date Of Birth</td>' +
+            '   <td>:</td>' +
+            '   <td>'+moment(d.tanggal_lahir).format('DD MMM YYYY')+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>E-KTP</td>' +
+            '   <td>:</td>' +
+            '   <td>'+ektp+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>Visa</td>' +
+            '   <td>:</td>' +
+            '   <td>'+visa+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>Passport</td>' +
+            '   <td>:</td>' +
+            '   <td>'+passport+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>Phone</td>' +
+            '   <td>:</td>' +
+            '   <td>'+d.nomor_telp+'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '   <td>E-mail</td>' +
+            '   <td>:</td>' +
+            '   <td>'+d.email+'</td>' +
+            '</tr>' +
+            '</table>' +
+            '<hr/>' +
+            '</div>' +
+            '<div style="text-align: right;">' +
+            '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
+            '</div>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+
+    });
+
+    $(document).on('click','#btnTourFinished',function () {
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<h4 class="header-modal">Rate your experience <i class="fa fa-smile-o"></i></h4>' +
+            '        <div id="viewBintang" style="margin-bottom: 25px;">' +
+            '            <button class="btn btn-default btn-start" data-no="1"><i class="fa fa-star-o"></i></button>' +
+            '            <button class="btn btn-default btn-start" data-no="2"><i class="fa fa-star-o"></i></button>' +
+            '            <button class="btn btn-default btn-start" data-no="3"><i class="fa fa-star-o"></i></button>' +
+            '            <button class="btn btn-default btn-start" data-no="4"><i class="fa fa-star-o"></i></button>' +
+            '            <button class="btn btn-default btn-start" data-no="5"><i class="fa fa-star-o"></i></button>' +
+            '        </div>' +
+            '        <div class="form-group">' +
+            '               <input class="hide" id="formSkor" >' +
+            '            <textarea class="form-control" rows="3" id="formKomentar" placeholder="Your comment"></textarea>' +
+            '        </div>' +
+            '        <button class="btn btn-block btn-success" id="btnSubmitRate">Submit</button>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+
+        $('.btn-start').click(function () {
+            var no = $(this).attr('data-no');
+            $('#formSkor').val(no);
+            $('.btn-start').removeClass('btn-warning btn-default');
+
+            for(var i=1;i<=5;i++){
+                if(i<=no){
+                    $('.btn-start[data-no='+i+']').addClass('btn-warning');
+                } else {
+                    $('.btn-start[data-no='+i+']').addClass('btn-default');
+                }
+            }
+
+        });
+
+        $('#btnSubmitRate').click(function () {
+
+            var formSkor = $('#formSkor').val();
+            var formKomentar = $('#formKomentar').val();
+
+            if(formSkor!='' && formSkor!=null &&
+                formKomentar!='' && formKomentar!=null){
+
+                loading_button('#btnSubmitRate');
+                $('.btn-start,#formKomentar').prop('disabled',true);
+
+                var detailTr = localStorage.getItem('details-transaksi');
+                var dataDetails = jwt_decode(detailTr,keyS);
+
+                var formData = [{
+                    skor : formSkor,
+                    komentar : formKomentar,
+                    user_local_guide_driver_id : dataDetails.user_local_guide_driver_id,
+                    transaksi_id_transaksi : dataDetails.id_transaksi,
+                    transaksi_bulan_transaksi : dataDetails.bulan_transaksi,
+                    transaksi_tahun_transaksi : dataDetails.tahun_transaksi
+                }];
+
+                setting_api.method = 'POST';
+                setting_api.contentType = 'application/json';
+                setting_api.url = base_api_url+'giverating ';
+                setting_api.data = JSON.stringify(formData);
+
+                $.ajax(setting_api).done(function (result) {
+
+                    toastr.success('Rate saved','Success');
+                    var jsonResult = JSON.parse(result);
+
+                    var giveRatingGuide = localStorage.getItem('giveRatingGuide');
+
+                    var dGive = [];
+                    if(typeof  giveRatingGuide !== 'undefined'
+                        && giveRatingGuide!=''
+                        && giveRatingGuide!=null){
+                        dGive = JSON.parse(giveRatingGuide);
+                    }
+
+                    dGive.push(dataDetails.id_transaksi);
+                    localStorage.setItem('giveRatingGuide',JSON.stringify(dGive));
+
+
+                    setTimeout(function () {
+
+                        var page = 'history';
+                        window.location.replace('../template/template_customer.html?page='+page+'&b_m=true');
+                    },500);
+
+
+                });
+
+
+            } else {
+                toastr.error('Rate & Comment are required','Error');
+            }
+
+        });
+
+    });
+
+</script>

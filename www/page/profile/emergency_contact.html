@@ -1,0 +1,186 @@
+
+
+<style>
+    .em-name {
+        color: #009688;
+        font-weight: bold;
+    }
+    #tableEmc {
+        margin-bottom: 0px;
+    }
+    #tableEmc tr th, #tableEmc tr td {
+        text-align: center;
+    }
+</style>
+
+<div class="container" style="margin-top: 70px;">
+    <div class="col-md-8 col-md-offset-2">
+
+        <div style="text-align: right;">
+            <button class="btn btn-success" id="btnActionAdd" disabled><i class="fa fa-plus margin-right"></i> Emergency Contact</button>
+            <hr/>
+        </div>
+
+        <div class="thumbnail">
+            <table class="table table-striped" id="tableEmc">
+                <thead>
+                <tr>
+                    <th>List Contact</th>
+                    <th style="width: 5%;"><i class="fa fa-gear"></i></th>
+                </tr>
+                </thead>
+                <tbody id="rowEmgC"></tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        loadEmergencyContact();
+    });
+
+    $('#btnActionAdd').click(function () {
+        $('#myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-header').html('<h4 class="modal-title">Adding Emergency Contact</h4>');
+
+        $('#myModal .modal-body').html('<div class="row" data-toggle="validator" id="myForm">' +
+            '    <div class="col-md-12">' +
+            '        <div class="form-group">' +
+            '            <label>Full Name</label>' +
+            '            <input class="form-control formAddEmrg" autofocus id="formFullName" required>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="col-md-12">' +
+            '        <div class="form-group">' +
+            '            <label>Phone Number</label>' +
+            '            <input class="form-control formAddEmrg" id="formHP" type="number" required>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="col-md-12">' +
+            '        <div class="form-group">' +
+            '            <label>E-mail</label>' +
+            '            <input class="form-control formAddEmrg" id="formEmail" type="email" required>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="col-md-12">' +
+            '        <div style="text-align: right;">' +
+            '            <button class="btn btn-success" id="btnSubmitEmg">Submit</button> |' +
+            '            <button class="btn btn-default" data-dismiss="modal">Close</button>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>');
+
+        $('#myForm').validator();
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+
+        $('.modal').on('shown.bs.modal', function() {
+            $(this).find('[autofocus]').focus();
+        });
+
+
+        $('#btnSubmitEmg').click(function () {
+
+            var formFullName = $('#formFullName').val();
+            var formHP = $('#formHP').val();
+            var formEmail = $('#formEmail').val();
+
+            if(formFullName !='' && formFullName!=null &&
+                formHP !='' && formHP!=null &&
+            formEmail !='' && formEmail!=null && isEmail(formEmail)){
+
+                loading_buttonSM('#btnSubmitEmg');
+                $('button[data-dismiss=modal],.formAddEmrg').prop('disabled',true);
+
+                var dataContact = [{
+                    nama : formFullName,
+                    nomor_telp : formHP,
+                    email : formEmail
+                }];
+
+                setting_api.method = 'POST';
+                setting_api.contentType = 'application/json';
+                setting_api.url = base_api_url+'addemergencycontact';
+                setting_api.data = JSON.stringify(dataContact);
+
+
+                $.ajax(setting_api).done(function (result) {
+                   var jsonResult = JSON.parse(result);
+
+                   if(jsonResult[0]=='sukses'){
+                       toastr.success('Contact saved','Success');
+                       loadEmergencyContact();
+                       setTimeout(function () {
+                           $('#myModal').modal('hide');
+                       },500);
+                   }
+                });
+
+            } else {
+                toastr.warning('All form required','Warning');
+            }
+
+
+        });
+
+    });
+
+    function loadEmergencyContact() {
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'listemergencycontact';
+        $.ajax(setting_api).done(function (result) {
+            var jsonResult = JSON.parse(result);
+
+            $('#btnActionAdd').prop('disabled',(jsonResult.length>=3) ? true : false);
+            $('#rowEmgC').empty();
+            if(jsonResult.length>0){
+                $.each(jsonResult,function (i,v) {
+                    $('#rowEmgC').append('<tr>' +
+                        '                    <td style="text-align: left;">' +
+                        '                        <span class="em-name">'+v.nama+'</span>' +
+                        '                        <p class="help-block">' +
+                        '                            <span><i class="fa fa-phone margin-right"></i> '+((v.nomor_telp!='' && v.nomor_telp!=null) ? v.nomor_telp : '-')+'</span>' +
+                        '                            <br/>' +
+                        '                            <span><i class="fa fa-envelope margin-right"></i> '+((v.email!='' && v.email!=null) ? v.email : '-')+'</span>' +
+                        '                        </p>' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        <button class="btn btn-sm btn-danger btnDeleteEmrg" data-id="'+v.id_emergency_contact+'"><i class="fa fa-trash"></i></button>' +
+                        '                    </td>' +
+                        '                </tr>');
+                })
+            }
+
+
+        });
+
+
+
+    }
+
+    $(document).on('click','.btnDeleteEmrg',function () {
+        if(confirm('Are you sure to delete?')){
+
+            $('#btnDeleteEmrg').prop('disabled',true);
+
+            var id_emergency_contact = $(this).attr('data-id');
+            setting_api.method = 'GET';
+            setting_api.url = base_api_url+'deleteemergencycontact?idEmergency='+id_emergency_contact;
+
+            $.ajax(setting_api).done(function (result) {
+                toastr.info('Deleted success','Info');
+               loadEmergencyContact();
+                $('#btnDeleteEmrg').prop('disabled',false);
+            });
+        }
+    });
+
+</script>

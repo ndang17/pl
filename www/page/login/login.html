@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Login Page PegiLagi">
+    <meta name="author" content="pegilagi.com">
+    <meta http-equiv="Content-Security-Policy" content="" />
+    <!--<link rel="icon" href="https://getbootstrap.com/docs/3.3/favicon.ico">-->
+    <link rel="icon" href="../../images/icon/favicon.ico">
+
+    <title>Signin PegiLagi.com</title>
+
+</head>
+<style>
+    body {
+        background-image: url("../../images/bg.png");
+        background-repeat:no-repeat;
+    }
+</style>
+<body>
+
+<div id="include"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12"  style="text-align: center;margin-bottom: 30px;">
+            <img src="../../images/logo_pegilagi_b_light.png" style="max-width: 200px;">
+        </div>
+    </div>
+</div>
+
+<div id="loadPage"></div>
+
+
+<script src="../../assets/bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../cordova.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#include').load('include_login.html',function () {
+            loadingPage('#loadPage','#fff');
+            setTimeout(function () {
+                $('#loadPage').html(pageLogin);
+                $('#loadPage').animateCss('flipInX');
+                $('#formLoginUsername').focus();
+                $('#myForm').validator();
+            },500);
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

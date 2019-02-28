@@ -1,0 +1,116 @@
+<style>
+    .help-block {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="thumbnail" style="margin: 10px;margin-bottom: 30px">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">Update</a></li>
+        <!--<li role="presentation"><a href="#">Promo <span class="badge">4</span></a></li>-->
+    </ul>
+
+
+    <div style="margin-top: 30px;" id="viewMail"></div>
+
+</div>
+
+<textarea id="arrInbox" class="hide"></textarea>
+
+<script>
+    $(document).ready(function () {
+        // windows.height_page = $(window).height();
+
+        $('#viewMail').css({
+            'max-height' : (parseInt($(window).height()) - 200)+'px',
+            'overflow' : 'auto'
+        });
+
+        loadInbox();
+
+    });
+
+    function loadInbox() {
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'listinbox';
+        $.ajax(setting_api).done(function (result) {
+
+            $('#arrInbox').val(result);
+
+            var jsonResult = JSON.parse(result);
+
+            if(jsonResult.length>0){
+                $('#viewMail').empty();
+                $.each(jsonResult,function (i,v) {
+
+                    var labelUnread = ' <span id="viewUnread'+i+'" class="label label-warning" style="margin-left: 5px;">Unread</span>';
+
+                    var readInbox = localStorage.getItem('readInbox');
+                    if(readInbox!='' && readInbox!=null){
+                        var dataReadInbox = JSON.parse(readInbox);
+                        labelUnread = ($.inArray(''+i,dataReadInbox)!=-1)
+                            ? ''
+                            : labelUnread;
+                    }
+
+                    $('#viewMail').append('<div style="margin: 5px; margin-top: 15px;position: relative;">' +
+                        '            <div style="min-height: 30px;border-bottom: 1px solid #cccccc;">' +
+                        '                <div class="hide" style="position: absolute;top: 0px;right: 0px;font-size: 11px;color: #9E9E9E;">' +
+                        '                    <i class="fa fa-clock-o"></i> 19 Jan 2019 08:00' +
+                        '                </div>' +
+                        '                <a href="jsvascript:void(0);" data-id="'+i+'" class="showInboxMessage"><b>'+v.heading_inbox+'</b></a>'+labelUnread+
+                        '                <p class="help-block">'+v.konten_inbox.substr(0,25)+'..</p>' +
+                        '            </div>' +
+                        '        </div>');
+                })
+            } else {
+                $('#viewMail').html('-- Empty --');
+            }
+
+        });
+    }
+
+
+    $(document).on('click','.showInboxMessage',function () {
+
+        var ID = $(this).attr('data-id');
+        var result = $('#arrInbox').val();
+
+        var jsonResult = JSON.parse(result);
+        var d = jsonResult[ID];
+
+        var readInbox = localStorage.getItem('readInbox');
+
+        if(typeof readInbox !== 'undefined' && readInbox!='' && readInbox!=null){
+            var dataReadInbox = JSON.parse(readInbox);
+            if($.inArray(''+ID,dataReadInbox)==-1){
+                dataReadInbox.push(ID);
+                localStorage.setItem('readInbox',JSON.stringify(dataReadInbox));
+            }
+        } else {
+            localStorage.setItem('readInbox',JSON.stringify([ID]));
+        }
+
+        $('#viewUnread'+ID).remove();
+        loadCountInbox();
+
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<div class="row">' +
+            '    <div class="col-md-12">' +
+            '        <div style="text-align: center;">' +
+            '            <h3>'+d.heading_inbox+'</h3>' +
+            '            <p>'+d.konten_inbox+'</p>' +
+            '           <hr/>' +
+            '           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
+            '        </div>' +
+            '    </div>' +
+            '</div>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+    });
+
+</script>

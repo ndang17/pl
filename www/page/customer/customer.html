@@ -1,0 +1,791 @@
+
+<style>
+    body {
+        padding-top: 0px;
+    }
+
+    .datepicker-inline {
+        width: 100%;
+    }
+    .datepicker table {
+        width: 100%;
+    }
+
+    .classDesc{
+        min-height: 10px;
+        background: lightyellow;
+        border: 2px dotted #377f8d;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-top: 15px;
+    }
+
+    .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-12 {
+        padding: 3px;
+    }
+
+    .panelDateOfBirst {
+        padding: 5.5px;
+        text-align: center;
+    }
+    .panelDateOfBirst:hover{
+        cursor: pointer;
+    }
+
+    .form-group {
+        margin-bottom: 7px;
+    }
+
+    .form-customer {
+        padding: 23px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<nav id="navbar_Back" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" id="btnBack" data-url="" href="javascrpt:void(0);">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+
+            <input class="hide" id="formURLBACK3">
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="choice" style="margin-top: 80px;">
+
+    <textarea class="hide" id="dataHistoryCustomer" ></textarea>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="input-group">
+                <input type="text" class="form-control" id="formVoucher" placeholder="Input Voucher Code">
+                <span class="input-group-btn">
+                <button class="btn btn-default" id="btnCheckVoucher">Check Voucher</button>
+              </span>
+            </div>
+
+            <div class="classDesc">
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-map-marker margin-right"></i> Going to</span>
+                    <b id="viewKota">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-tags margin-right"></i> Preference</span>
+                    <b id="viewPrefrensi">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-calendar-check-o margin-right"></i> Arrive On</span>
+                    <b id="viewArriveOn">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-calendar-check-o margin-right"></i> Leave On</span>
+                    <b id="viewLeaveOn">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-user margin-right"></i> Customer</span>
+                    <b id="viewUser">Adult : <span id="viewAdult">0</span> | Children : <span id="viewchildren">0</span></b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-money margin-right"></i> Cost /Day</span>
+                    <b id="viewTarifPerDay"></b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-percent margin-right"></i> Voucher</span>
+                    <b id="viewVoucher">Rp. 0,-</b>
+                    <input id="statusVoucher" value="0" class="hide">
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-usd margin-right"></i> Total Cost</span>
+                    <b id="viewTarif"></b>
+                    <input id="formTarifAsal" class="hide">
+                    <input id="formTarif" class="hide">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div id="showCustomer"></div>
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-bars margin-right"></i> Overtime</h4>
+                </div>
+                <div class="panel-body">
+                    Biaya ini akan dikenakan jika durasi rental melebihi 12 jam atau 23:59 disetiap hari rental.
+                    Tambahan ini hanya dapat dibayarkan langsung kepada sopir
+
+                    <div style="margin-top: 10px;text-align: right;">
+                        <span class="label label-default" style="font-size: 13px;">Rp 35.000 / Jam</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-bars margin-right"></i> Penggunaan Luar Kota</h4>
+                </div>
+                <div class="panel-body">
+                    Biaya ini akan dikenakan jika Anda bepergian ke area luar kota yang tergolong dalam Zona 1 dan ZOna 2.
+                    Tambahan ini hanya mencakup biaya penggunaan rental dan belum termasuk bensin, parkir, tol, uang makan sopir, tip dan biaya akomodasi sopir
+
+                    <div style="margin-top: 10px;text-align: right;">
+                        Harga mulai dari :  <span class="label label-default" style="font-size: 13px;">Rp 232.750 / Hari</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row hide divBtnSubmit">
+        <div class="col-md-8 col-md-offset-2">
+            <button class="btn btn-lg btn-success btn-block" id="btnSubmitCustomer">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+
+<textarea id="dataTemporary" class="hide" readonly rows="3"></textarea>
+
+<script>
+
+    $(document).ready(function () {
+
+        window.arr_panggilan = [];
+
+        window.TotalPerson = 0;
+
+        loadHistoryCustomer();
+
+
+
+    });
+
+
+    function loadHistoryCustomer() {
+        var ArrPanggilan = localStorage.getItem('ArrPanggilan');
+        arr_panggilan = JSON.parse(ArrPanggilan);
+
+
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'historypeserta';
+        $.ajax(setting_api).done(function (result) {
+            $('#dataHistoryCustomer').val(result);
+            loadTransaction();
+        });
+
+
+    }
+
+    function loadTransaction(){
+
+
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM tr_customer', [], function(tx, rs) {
+                if(rs.rows.length>0){
+
+                    var data_transaction = jwt_decode(rs.rows.item(0).data_transaction,keyS);
+
+                    $('#viewKota').html(data_transaction._kota);
+
+                    var viewPrefrensi = '';
+                    if(data_transaction._preferensi.length>0){
+                        for(var t=0;t<data_transaction._preferensi.length;t++){
+                            var koma = (t!=0) ? ', ' : '';
+                            viewPrefrensi = viewPrefrensi+''+koma+''+data_transaction._preferensi[t];
+                        }
+                    }
+
+                    $('#viewPrefrensi').html(viewPrefrensi);
+
+                    // View Customer
+                    $('#viewAdult').html(data_transaction.adult);
+                    $('#viewchildren').html(data_transaction.children);
+
+                    $('#viewArriveOn').html(moment(data_transaction.arrive_on).format('dddd, DD MMM YYYY'));
+                    $('#viewLeaveOn').html(moment(data_transaction.leave_on).format('dddd, DD MMM YYYY'));
+
+                    $('#dataTemporary').val(JSON.stringify(data_transaction));
+
+                    $('#formURLBACK3').val(data_transaction._urlBack_3);
+
+                    // Mendapatkan range date
+                    var fromDate = moment(data_transaction.arrive_on);
+                    var toDate = moment(moment(data_transaction.leave_on));
+                    var range = moment().range(fromDate, toDate);
+                    var arrayDay = range.toArray('days');
+
+                    var toalCost = parseFloat(data_transaction.tarif_rata_rata) * arrayDay.length;
+
+                    $('#viewTarifPerDay').html(data_transaction._tarif_rata_rata);
+                    $('#viewTarif').html('<span style="background: #337ab7;color: #ffffff;font-weight: bold;padding: 3px 10px 3px 10px;">'+formatRupiah(toalCost)+'</span>');
+                    $('#formTarifAsal').val(toalCost);
+                    $('#formTarif').val(toalCost);
+
+                    if(data_transaction.tarif_rata_rata!=null){
+                        // load custoner
+                        var jumlah_detail_orang = parseInt(data_transaction.jumlah_detail_orang);
+                        TotalPerson = jumlah_detail_orang;
+
+                        var dataHistoryCustomer = $('#dataHistoryCustomer').val();
+
+                        console.log(dataHistoryCustomer);
+
+                        var dataCustomer = JSON.parse(dataHistoryCustomer);
+
+                        for(var c=1;c<=jumlah_detail_orang;c++){
+
+                            $('#showCustomer').append('<div class="thumbnail">' +
+                                '                <h4 style="border-left: 7px solid orange;padding-left: 5px;">Customer '+c+'</h4>' +
+                                '                <div class="form-customer">' +
+                                '                    <div class="row">' +
+                                '                        <div class="col-xs-12">' +
+                                '                            <div class="form-group">' +
+                                '                                <select class="form-control formHistoryCustomer" data-no="'+c+'" id="formHistoryCustomer_'+c+'">' +
+                                '                                      <option value="">Not yet select</option>' +
+                                '                                </select>' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                    </div>' +
+                                '                   <div class="row">' +
+                                '                       <div class="col-xs-4">' +
+                                '                           <div class="form-group">' +
+                                '                               <select class="form-control" id="formPanggilan'+c+'"></select>' +
+                                '                           </div>' +
+                                '                       </div>' +
+                                '                       <div class="col-xs-8">' +
+                                '                           <div class="form-group">' +
+                                '                                <input class="form-control" placeholder="First Name" id="formFirstName'+c+'" required />' +
+                                '                           </div>' +
+                                '                       </div>' +
+                                '                   </div>' +
+                                '                    <div class="row">' +
+                                '                       <div class="col-xs-12">' +
+                                '                           <div class="form-group">' +
+                                '                               <input class="form-control" placeholder="Last Name" id="formLastName'+c+'" required />' +
+                                '                          </div>' +
+                                '                       </div>' +
+                                '                   </div>' +
+                                '                    <div class="row">' +
+                                '                        <div class="col-xs-4">' +
+                                '                            <div class="form-group">' +
+                                '                                <select class="form-control" id="formTypeID'+c+'">' +
+                                '                                    <option value="1">KTP</option>' +
+                                '                                    <option value="2">Visa</option>' +
+                                '                                    <option value="2">Passpor</option>' +
+                                '                                </select>' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                        <div class="col-xs-8">' +
+                                '                            <div class="form-group">' +
+                                '                                <input class="form-control" id="formNumberID'+c+'" type="number" placeholder="Identity Number" required />' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                    </div>' +
+                                '                    <div class="row">' +
+                                '                        <div class="col-xs-12">' +
+                                '                            <div class="form-group">' +
+                                '                                <input class="form-control" id="formHP'+c+'" type="number" placeholder="Phone Number" required />' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                    </div>' +
+                                '                    <div class="row">' +
+                                '                        <div class="col-xs-12">' +
+                                '                            <div class="form-group">' +
+                                '                                <input class="form-control" id="formEmail'+c+'" type="email" placeholder="E-mail" required />' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                    </div>' +
+                                '                    <div class="row">' +
+                                '                        <div class="col-xs-4">' +
+                                '                            <div class="form-group">' +
+                                '                                <select class="form-control" id="formGender'+c+'">' +
+                                '                                    <option value="1">Male</option>' +
+                                '                                    <option value="2">Female</option>' +
+                                '                                </select>' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                        <div class="col-xs-8">' +
+                                '                           <input id="formDateOfBirth'+c+'" class="hide" readonly />' +
+                                '                            <div class="thumbnail panelDateOfBirst" id="viewDateOfBirth'+c+'" data-no-dob="'+c+'">' +
+                                '                                Date of Birth' +
+                                '                            </div>' +
+                                '                        </div>' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '            </div>');
+
+                            for (var p=0;p<arr_panggilan.length;p++){
+                                var d_p = arr_panggilan[p];
+                                $('#formPanggilan'+c).append('<option value="'+d_p.id_panggilan+'">'+d_p.keterangan_panggilan+'</option>');
+                            }
+
+                            if(dataCustomer.length>0){
+                                $('#formHistoryCustomer_'+c).removeClass('hide');
+                                for(var dc=0;dc<dataCustomer.length;dc++){
+                                    if(dataCustomer[dc].nama_depan!=null){
+                                        $('#formHistoryCustomer_'+c).append('<option value="'+dc+'">'+dataCustomer[dc].nama_depan.trim()+' '+dataCustomer[dc].nama_belakang.trim()+'</option>');
+                                    }
+
+                                }
+                            } else {
+                                $('#formHistoryCustomer_'+c).addClass('hide');
+                            }
+
+                        }
+
+                        $('.divBtnSubmit').removeClass('hide');
+                    } else {
+                        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+                        $('#myModal .modal-body').html('<div style="text-align: center;">' +
+                            '    Tanggal belum di set tarif, silahkan ganti tanggal' +
+                            '    <hr/>' +
+                            '    <button class="btn btn-warning" id="btnBack2">Back to set date</button>' +
+                            '</div>');
+                        $('#myModal').modal({
+                            backdrop : 'static',
+                            keyboard: false
+                        });
+
+                        $('#btnBack2').click(function () {
+                            backPage();
+                        });
+                    }
+
+
+                }
+            }, function(tx, e) {
+
+            });
+        });
+    };
+
+    $(document).on('change','.formHistoryCustomer',function () {
+        var no = $(this).attr('data-no');
+
+        var IDNow = $('#formHistoryCustomer_'+no).val();
+
+        if(IDNow!='') {
+            var selecttrue = true;
+            // Cek apakah sudah ada yang select atau belum
+            for(var i=1;i<=TotalPerson;i++){
+                if(i!=no){
+                    var valueSelec = $('#formHistoryCustomer_'+i).val();
+                    if(IDNow==valueSelec){
+                        selecttrue = false;
+                        break;
+                    }
+                }
+
+            }
+
+            var dataHistoryCustomer = $('#dataHistoryCustomer').val();
+            var dataCustomer = JSON.parse(dataHistoryCustomer);
+
+            if(selecttrue==true){
+
+                var d = dataCustomer[IDNow];
+
+                var sckartuIdentitas = 1;
+                if(d.nomor_identitas_visa!='' && d.nomor_identitas_visa!=null){
+                    sckartuIdentitas = 2;
+                } else if (d.nomor_identitas_passport!='' && d.nomor_identitas_passport!=null){
+                    sckartuIdentitas = 2;
+                }
+
+                $('#formPanggilan'+no).val(d.panggilan_id_panggilan);
+                $('#formFirstName'+no).val(d.nama_depan);
+                $('#formLastName'+no).val(d.nama_belakang);
+                $('#formTypeID'+no).val(sckartuIdentitas);
+                $('#formNumberID'+no).val(d.nomor_identitas_ektp);
+                $('#formHP'+no).val(d.nomor_telp);
+                $('#formEmail'+no).val(d.email);
+                $('#formGender'+no).val(d.jenis_kelamin_id_jenis_kelamin);
+                $('#formDateOfBirth'+no).val(d.tanggal_lahir);
+                $('#viewDateOfBirth'+no).html(moment(d.tanggal_lahir).format('DD MMM YYYY'));
+            } else {
+
+                resetFormCustomer(no);
+                alert('The user is already used');
+            }
+
+        } else {
+            resetFormCustomer(no);
+        }
+
+
+    });
+
+    function resetFormCustomer(no){
+        $('#formHistoryCustomer_'+no).val('');
+
+        $('#formPanggilan'+no).val(1);
+
+        $('#formFirstName'+no).val('');
+        $('#formLastName'+no).val('');
+        $('#formTypeID'+no).val(1);
+        $('#formNumberID'+no).val('');
+        $('#formHP'+no).val('');
+        $('#formEmail'+no).val('');
+        $('#formGender'+no).val(1);
+
+        $('#formDateOfBirth'+no).val('');
+        $('#viewDateOfBirth'+no).html('Date of Birth');
+    }
+
+    $('#btnBack').click(function () {
+        backPage();
+    });
+
+
+    function backPage(){
+        var url = $('#formURLBACK3').val();
+        $("#loadPage").animateCss('fadeOut',function () {
+            $("#loadPage").remove();
+            window.location.replace(url);
+        });
+    }
+
+
+    // Birt Day thumbnail
+    $(document).on('click','.panelDateOfBirst',function () {
+        var No = $(this).attr('data-no-dob');
+        var date = $(this).attr('data-date');
+
+        $('#myModal .modal-header,#myModal .modal-footer').addClass('hide');
+        $('#myModal .modal-body').html('<h3>Date of Birth</h3><hr/><div id="datepicker" data-date="'+date+'"></div>' +
+            '                <input type="hidden" id="my_hidden_input">' +
+            '<hr/>' +
+            '<div style="text-align: right;">' +
+            '<button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>' +
+            '</div> ');
+
+        $('#datepicker').datepicker({
+            todayHighlight : true,
+            format : 'yyyy-mm-dd'
+        });
+
+        $('#datepicker').on('changeDate', function() {
+            var valueDatePick = $('#datepicker').datepicker('getFormattedDate');
+            var valueDatePick_split = valueDatePick.split('-');
+
+            var m = moment().date(valueDatePick_split[2]).month(parseInt(valueDatePick_split[1])-1)
+                .year(valueDatePick_split[0]);
+
+            $('#viewDateOfBirth'+No).html(m.format('DD MMM YYYY'));
+            $('#viewDateOfBirth'+No).attr('data-date',valueDatePick);
+            $('#formDateOfBirth'+No).val(valueDatePick);
+        });
+
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard : false,
+            show : true
+        });
+    });
+
+
+    // btnSubmitCustomer
+    $(document).on('click','#btnSubmitCustomer',function () {
+
+        var arrFalse = [];
+        // Cek Required User
+        var dataTemporary = $('#dataTemporary').val();
+
+        var dataTr = JSON.parse(dataTemporary);
+
+        var jumlah_detail_orang = parseInt(dataTr.jumlah_detail_orang);
+
+
+        if(jumlah_detail_orang>0) {
+            for (var i = 1; i <= jumlah_detail_orang; i++) {
+
+                if(i==1){
+                    var formPanggilan = $('#formPanggilan'+i).val();
+                    formReq('#formPanggilan'+i,formPanggilan);
+                    var formFirstName = $('#formFirstName'+i).val();
+                    formReq('#formFirstName'+i,formFirstName);
+                    var formLastName = $('#formLastName'+i).val();
+                    formReq('#formLastName'+i,formLastName);
+
+                    var formTypeID = $('#formTypeID'+i).val();
+                    formReq('#formTypeID'+i,formTypeID);
+                    var formNumberID = $('#formNumberID'+i).val();
+                    formReq('#formNumberID'+i,formNumberID);
+
+
+
+                    var formGender = $('#formGender'+i).val();
+                    formReq('#formGender'+i,formGender);
+                    var formDateOfBirth = $('#formDateOfBirth'+i).val();
+
+                    if(formDateOfBirth=='' || formDateOfBirth==null){
+                        $('#viewDateOfBirth'+i).css('border','1px solid red');
+                        setTimeout(function () {
+                            $('#viewDateOfBirth'+i).css('border','1px solid #ccc');
+                        },5000);
+                    }
+
+
+                    var formHP = $('#formHP'+i).val();
+                    formReq('#formHP'+i,formHP);
+                    var formEmail = $('#formEmail'+i).val();
+                    formReq('#formEmail'+i,formEmail);
+
+                    if(formPanggilan=='' || formPanggilan==null ||
+                        formFirstName=='' || formFirstName==null ||
+                        formLastName=='' || formLastName==null ||
+                        formTypeID=='' || formTypeID==null ||
+                        formNumberID=='' || formNumberID==null ||
+                        formHP=='' || formHP==null ||
+                        formEmail=='' || formEmail==null ||
+                        formGender=='' || formGender==null ||
+                        formDateOfBirth=='' || formDateOfBirth==null){
+                     arrFalse.push(1);
+                    }
+
+                } else {
+
+                    var formPanggilan = $('#formPanggilan'+i).val();
+                    formReq('#formPanggilan'+i,formPanggilan);
+                    var formFirstName = $('#formFirstName'+i).val();
+                    formReq('#formFirstName'+i,formFirstName);
+                    var formLastName = $('#formLastName'+i).val();
+                    formReq('#formLastName'+i,formLastName);
+
+                    var formTypeID = $('#formTypeID'+i).val();
+                    formReq('#formTypeID'+i,formTypeID);
+                    var formNumberID = $('#formNumberID'+i).val();
+                    formReq('#formNumberID'+i,formNumberID);
+
+                    var formGender = $('#formGender'+i).val();
+                    formReq('#formGender'+i,formGender);
+                    var formDateOfBirth = $('#formDateOfBirth'+i).val();
+
+                    if(formPanggilan=='' || formPanggilan==null ||
+                        formFirstName=='' || formFirstName==null ||
+                        formLastName=='' || formLastName==null ||
+                        formTypeID=='' || formTypeID==null ||
+                        formNumberID=='' || formNumberID==null ||
+                        formGender=='' || formGender==null ||
+                        formDateOfBirth=='' || formDateOfBirth==null){
+                        arrFalse.push(1);
+                    }
+
+                }
+
+                if(formDateOfBirth=='' || formDateOfBirth==null){
+                    $('#viewDateOfBirth'+i).css('border','1px solid red');
+                    setTimeout(function () {
+                        $('#viewDateOfBirth'+i).css('border','1px solid #ccc');
+                    },5000);
+                } else{
+                    $('#viewDateOfBirth'+i).css('border','1px solid #ccc');
+                }
+
+            }
+        }
+
+
+        if($.inArray(1,arrFalse)==-1){
+            $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+            $('#myModal .modal-body').html('<div style="text-align: center;">' +
+                '    Are you sure to payment?' +
+                '    <hr/>' +
+                '    <button class="btn btn-success" id="btnYesNext">Yes</button> | ' +
+                '<button class="btn btn-default" data-dismiss="modal">No</button>' +
+                '</div>');
+            $('#myModal').modal({
+                backdrop : 'static',
+                keyboard: false
+            });
+        } else {
+            toastr.warning('Form is required','Warning');
+        }
+
+    });
+
+    $(document).on('click','#btnYesNext',function () {
+
+        var statusVoucher = $('#statusVoucher').val();
+        var formVoucher = $('#formVoucher').val();
+
+        var dataTemporary = $('#dataTemporary').val();
+
+        var dataTr = JSON.parse(dataTemporary);
+        var arr_cusomer = [];
+        var arr_to_create_transaksi = [{
+            user_teman_pegi_customer_id : Customer_ID,
+            arrive_on: dataTr.arrive_on,
+            leave_on: dataTr.leave_on,
+            preferensi : dataTr.preferensi,
+            daftar_abahasa : dataTr.list_language,
+            jumlah_detail_orang : dataTr.jumlah_detail_orang,
+            daftar_kota_id_daftar_kota : dataTr.tarif_daftar_kota_id_daftar_kota,
+            tarif_rata_rata : dataTr.tarif_rata_rata,
+            voucher_code : (statusVoucher==1 || statusVoucher==1) ? formVoucher : null,
+            lokasi_penjemputan : dataTr.lokasi_penjemputan,
+            waktu_penjemputan : dataTr.waktu_penjemputan,
+            special_requirement : dataTr.special_requirement
+        }];
+        var jumlah_detail_orang = parseInt(dataTr.jumlah_detail_orang);
+
+        if(jumlah_detail_orang>0){
+            for(var i=1;i<=jumlah_detail_orang;i++){
+                var formPanggilan = $('#formPanggilan'+i).val();
+                var formFirstName = $('#formFirstName'+i).val();
+                var formLastName = $('#formLastName'+i).val();
+
+                var formTypeID = $('#formTypeID'+i).val();
+                var formNumberID = $('#formNumberID'+i).val();
+
+                var formHP = $('#formHP'+i).val();
+                var formEmail = $('#formEmail'+i).val();
+
+                var formGender = $('#formGender'+i).val();
+                var formDateOfBirth = $('#formDateOfBirth'+i).val();
+
+                if(formPanggilan!='' && formPanggilan!=null &&
+                    formFirstName!='' && formFirstName!=null &&
+                formLastName!='' && formLastName!=null &&
+                formNumberID!='' && formNumberID!=null &&
+                formHP!='' && formHP!=null &&
+                formEmail!='' && formEmail!=null &&
+                formGender!='' && formGender!=null &&
+                formDateOfBirth!='' && formDateOfBirth!=null){
+                    var nomor_identitas_ektp = null;
+                    var nomor_identitas_visa = null;
+                    var nomor_identitas_passport = null;
+                    if(formTypeID=='1') {
+                        nomor_identitas_ektp = formNumberID;
+                    } else if(formTypeID=='2'){
+                        nomor_identitas_visa = formNumberID;
+                    } else if(formTypeID=='3'){
+                        nomor_identitas_passport = formNumberID;
+                    }
+
+                    loading_buttonSM('#btnYesNext');
+                    $('button[data-dismiss=modal]').prop('disabled',true);
+
+
+                    var arr_ = {
+                        nama_depan : formFirstName,
+                        nama_belakang : formLastName,
+                        arrive_on: dataTr.arrive_on,
+                        leave_on: dataTr.leave_on,
+                        nomor_telp: formHP,
+                        email: formEmail,
+                        nomor_identitas_ektp: nomor_identitas_ektp,
+                        nomor_identitas_visa: nomor_identitas_visa,
+                        nomor_identitas_passport: nomor_identitas_passport,
+                        status_transaksi_id_status_transaksi: 4,
+                        jenis_kelamin_id_jenis_kelamin: formGender,
+                        tanggal_lahir: formDateOfBirth,
+                        panggilan_id_panggilan: formPanggilan
+                    };
+
+                    arr_cusomer.push(arr_);
+                    arr_to_create_transaksi.push(arr_);
+
+                }
+            }
+        }
+
+        dataTr.Customer = arr_cusomer;
+        dataTr._urlBack_4 = 'template_customer.html?page=customer';
+
+        // Create transaksi
+        setting_api.method = 'POST';
+        setting_api.contentType = 'application/json';
+        setting_api.url = base_api_url+'createtransaksicustomer';
+        setting_api.data = JSON.stringify(arr_to_create_transaksi);
+
+        $.ajax(setting_api).done(function (result) {
+
+
+            var jsonResult = JSON.parse(result);
+
+            db.transaction(function(tx) {
+
+                dataTr.PaymentToken = ''+jsonResult[0];
+
+                var data_transaction = jwt_encode(dataTr,keyS);
+                tx.executeSql('DROP TABLE IF EXISTS tr_customer');
+                // E1 = ID, E2 = Username, E3 = Password
+                tx.executeSql('CREATE TABLE IF NOT EXISTS tr_customer (data_transaction)');
+                tx.executeSql('INSERT INTO tr_customer VALUES (?)', [data_transaction]);
+
+                toastr.success('Transaction Created','Success');
+
+                setTimeout(function () {
+                    // window.location.href = 'template_customer.html?page=checkuporder';
+                    window.location.href = 'template_customer.html?page=payment&b_m=true';
+                },1000);
+
+            }, function(e) {
+                // console.log('Transaction Create Table ERROR: ' + e.message);
+            }, function() {
+
+            });
+
+
+        });
+
+
+
+    });
+
+
+    // Check VOucher
+    $('#btnCheckVoucher').click(function () {
+        var formVoucher = $('#formVoucher').val();
+        if(formVoucher!='' && formVoucher!=null){
+            setting_api.url = base_api_url+'checkvoucher?voucher_code='+formVoucher;
+            setting_api.method = 'GET';
+            $.ajax(setting_api).done(function (result) {
+
+
+                var jsonResult = JSON.parse(result);
+                $('#viewVoucher').html('Rp. 0,-');
+                var totalCost = parseFloat($('#formTarifAsal').val());
+                $('#statusVoucher').val(0);
+                if(typeof jsonResult.nominal_voucher !== "undefined"){
+                    toastr.success('','Voucher Valid');
+                    $('#viewVoucher').html('- '+formatRupiah(jsonResult.nominal_voucher));
+                    var NewCost = totalCost - parseFloat(jsonResult.nominal_voucher);
+                    $('#viewTarif').html('<span style="background: #337ab7;color: #ffffff;font-weight: bold;padding: 3px 10px 3px 10px;">'+formatRupiah(NewCost)+'</span>');
+                    $('#formTarif').val(NewCost);
+                    $('#statusVoucher').val(1);
+
+                } else {
+                    $('#formTarif').val(totalCost);
+                    toastr.warning(result[0],'Warning');
+                }
+
+            });
+        } else {
+
+        }
+    });
+    
+</script>

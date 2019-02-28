@@ -1,0 +1,52 @@
+<nav id="navbar_Back" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" id="btnURLBack" href="javascript:void(0)">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    $(document).ready(function () {
+        var dataURLBack = localStorage.getItem('URLBack');
+        window.URLBack = (dataURLBack!='' && typeof dataURLBack !== 'undefined')
+            ? JSON.parse(dataURLBack) : [];
+
+    });
+
+
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    function onBackKeyDown(e) {
+        e.preventDefault();
+        loadPageBack();
+    }
+
+    $('#btnURLBack').click(function () {
+        loadPageBack();
+    });
+
+    function loadPageBack() {
+        console.log(URLBack);
+        if(typeof URLBack.URL !== 'undefined' && URLBack.URL!=''){
+            if(parseInt(URLBack.Level)>0){
+                window.location.replace(URLBack.URL);
+                newBack();
+            }
+        } else {
+            window.location.replace('../template/template_customer.html?page=home&b_m=true');
+        }
+    }
+
+    function newBack() {
+        var NewLevel = parseInt(URLBack.Level) - 1;
+
+        var dataURLBack = {
+            URL : URLBack.URL2,
+            Level : NewLevel
+        };
+
+        localStorage.setItem('URLBack',JSON.stringify(dataURLBack));
+    }
+</script>

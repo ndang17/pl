@@ -1,0 +1,231 @@
+<style type="text/css">
+
+    body {
+        padding-top: 0px;
+    }
+
+    #btnChose .thumbnail {
+        text-align: center;
+        background: #ffffff;
+        margin-bottom: 0px;
+        min-height: 50px;
+        cursor: pointer;
+    }
+    #btnChose .thumbnail h5 {
+        font-weight: bold;
+    }
+
+    #btnChose .checked {
+        background: #377f8d;
+        color: #fff;
+    }
+
+    #btnChose .col-xs-4 {
+        padding: 3px;
+    }
+    .classDesc{
+        min-height: 10px;
+        background: lightyellow;
+        border: 2px dotted #377f8d;
+        padding: 10px;
+    }
+
+</style>
+
+<nav id="navbar_Back" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" id="btnBack" data-url="" href="javascrpt:void(0);">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="choice" style="margin-top: 20px;">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="classDesc">
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-map-marker margin-right"></i> Going to</span>
+                    <b id="viewKota">-</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 15px;">
+            <h3 style="text-align: center;color: #377f8d;font-weight: bold;">Pick your preferens</h3>
+        </div>
+    </div>
+
+    <div id="btnChose"></div>
+
+
+
+    <div class="row hide divBtnSubmit">
+        <div class="col-md-8 col-md-offset-2" style="margin-top: 30px;">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button id="btnActionSubmitPrefrensi" class="btn btn-lg btn-success btn-block">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<textarea id="dataTemporary" class="hide" readonly rows="3"></textarea>
+<script>
+
+    $(document).ready(function () {
+
+        window.prefrensi = [];
+        window._prefrensi = [];
+        loadTransaction();
+        loadPrefrensi();
+
+        loadPanggilan();
+
+    });
+
+    $('#btnBack').click(function () {
+        var url = $('#btnBack').attr('data-url');
+        $("#loadPage").animateCss('fadeOut',function () {
+            $("#loadPage").remove();
+            window.location.replace(url);
+        });
+    });
+
+    function loadTransaction(){
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM tr_customer', [], function(tx, rs) {
+                if(rs.rows.length>0){
+
+                    var data_transaction = jwt_decode(rs.rows.item(0).data_transaction,keyS);
+                    $('#viewKota').html(data_transaction._kota);
+
+                    $('#dataTemporary').val(JSON.stringify(data_transaction));
+                    $('#btnBack').attr('data-url',data_transaction._urlBack_1);
+
+                    if(typeof data_transaction.preferensi !== "undefined" && data_transaction.preferensi.length>0){
+                        for(var p=0;p < data_transaction.preferensi.length;p++){
+                            prefrensi.push(parseInt(data_transaction.preferensi[p]));
+
+                            _prefrensi.push(data_transaction._preferensi[p]);
+                        }
+                    }
+
+                }
+            }, function(tx, e) {
+
+            });
+        });
+    }
+
+    $(document).on('click','.thumbnail',function () {
+
+        var ID = $(this).attr('data-id');
+        var desc = $(this).attr('data-desc').trim();
+        var classList = $(this).attr('class').split(' ');
+        if($.inArray('checked',classList)!=-1){
+
+            prefrensi = $.grep(prefrensi, function(value) {
+                return value != ID;
+            });
+
+            _prefrensi = $.grep(_prefrensi, function(value) {
+                return value != desc;
+            });
+
+            $(this).removeClass('checked');
+
+        } else {
+            $(this).addClass('checked');
+            prefrensi.push(ID);
+            _prefrensi.push(desc);
+        }
+
+    });
+
+    function loadPrefrensi(){
+        setting_api.url = base_api_url+'listprefereableplace';
+        $.ajax(setting_api).done(function (result) {
+            var jsonResult = JSON.parse(result);
+
+            if(jsonResult.length>0){
+                var no_elm = 1;
+                for(var i=0;i<jsonResult.length;i++){
+                    var d = jsonResult[i];
+
+                    if(i%3==0 || i==0){
+                        $("#btnChose").append('<div class="row">' +
+                            '            <div class="col-md-8 col-md-offset-2" id="elm'+no_elm+'">' +
+                            '            </div>' +
+                            '        </div>');
+                        $("#btnChose").trigger('create');
+
+                        if(i%3==0 && i!=0){
+                            no_elm += 1;
+                        }
+                    }
+
+                    var sc = (prefrensi.length>0 && $.inArray(d.id_prefereable_place,prefrensi)!=-1) ? 'checked' : '';
+                    // var sc = '';
+
+                    $("#elm"+no_elm).append('<div class="col-xs-4">' +
+                        '                    <div class="thumbnail '+sc+'" data-id="'+d.id_prefereable_place+'" data-desc="'+d.keterangan+'"><h5>'+d.keterangan+'</h5></div>' +
+                        '                </div>');
+                    $("#elm"+no_elm).trigger('create');
+                }
+
+                $('.divBtnSubmit').removeClass('hide');
+            }
+        });
+    }
+
+
+    $('#btnActionSubmitPrefrensi').click(function () {
+
+        if(prefrensi.length>0){
+
+            processing_button('#btnActionSubmitPrefrensi');
+
+            var dataTr = JSON.parse($('#dataTemporary').val());
+
+            prefrensi.sort();
+            dataTr.preferensi = prefrensi;
+            dataTr._preferensi = _prefrensi;
+            dataTr._urlBack_2 = 'template_customer.html?page=prefrensi';
+
+            db.transaction(function(tx) {
+
+                var data_transaction = jwt_encode(dataTr,keyS);
+                tx.executeSql('DROP TABLE IF EXISTS tr_customer');
+                // E1 = ID, E2 = Username, E3 = Password
+                tx.executeSql('CREATE TABLE IF NOT EXISTS tr_customer (data_transaction)');
+                tx.executeSql('INSERT INTO tr_customer VALUES (?)', [data_transaction]);
+
+                window.location.href = 'template_customer.html?page=requirement';
+            }, function(e) {
+                // console.log('Transaction Create Table ERROR: ' + e.message);
+            }, function() {
+                // console.log('Populated database OK');
+            });
+
+        } else {
+            toastr.warning('Please select preference','Warning');
+        }
+
+    });
+
+    function loadPanggilan() {
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'listpanggilan';
+        $.ajax(setting_api).done(function (result) {
+            localStorage.setItem('ArrPanggilan',result);
+        });
+    }
+</script>

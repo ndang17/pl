@@ -1,0 +1,150 @@
+
+<style>
+    body {
+        background : none !important;
+        background-color : transparent !important;
+        background-image: url("../../images/bg.png") !important;
+        background-repeat:no-repeat !important;
+    }
+</style>
+
+
+<div id="include"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12"  style="text-align: center;margin-bottom: 30px;">
+            <img src="../../images/logo_pegilagi_b_light.png" style="max-width: 200px;">
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        window.pageLogin = '<div class="container" style="text-align: center;">' +
+            '        <div class="row">' +
+            '           <div class="col-md-12">' +
+            '            <div class="form-group">' +
+            '                <div class="input-group">' +
+            '                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>' +
+            '                    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">' +
+            '                </div>' +
+            '            </div>' +
+            '            <div class="form-group">' +
+            '                <div class="input-group">' +
+            '                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-key"></i></span>' +
+            '                    <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">' +
+            '                </div>' +
+            '            </div>' +
+            '            <button class="btn btn-lg btn-success btn-block" id="btnActionLogin" >Sign in</button>' +
+            '            <p style="color: #ffffff;text-align: right;font-family: \'Century Gothic\';">Did you forget your password ?</p>' +
+            '        </div>' +
+            '        <div class="" style="margin-top: 20px;">' +
+            '            <div class="col-md-12">' +
+            '                   <a class="btn btn-lg btn-block btn-social btn-facebook">' +
+            '                   <span class="fa fa-facebook"></span> Sign in with Facebook' +
+            '               </a>' +
+            '            </div>' +
+            '        </div>' +
+            '        <div class="" style="margin-top: 20px;">' +
+            '            <div class="col-xs-8">' +
+            '                <p style="color: #ffffff;text-align: left;font-family: \'Century Gothic\';">Don\'t have an account ?</p>' +
+            '            </div>' +
+            '            <div class="col-xs-4">' +
+            '                <button type="button" class="btn btn-sm btn-default btn-block" id="btnRegistration" style="background: transparent;border: 1px solid #fff;color: #fff;">Sign Up <i class="fa fa-chevron-right margin-left" aria-hidden="true"></i></button>' +
+            '            </div>' +
+            '        </div>' +
+            '        </div>' +
+            '</div>';
+
+        window.pageRegistration = '<div class="container">' +
+            '<div class="row">' +
+            '        <div class="col-md-12">' +
+            '            <h2 style="margin-top: 0px;">Create New Account</h2>' +
+            '            <form action="">' +
+            '                <div class="form-group">' +
+            '                    <div class="input-group">' +
+            '                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>' +
+            '                        <input type="text" class="form-control" placeholder="Full Name" aria-describedby="basic-addon1">' +
+            '                    </div>' +
+            '                </div>' +
+            '                <div class="form-group">' +
+            '                    <div class="input-group">' +
+            '                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>' +
+            '                        <input type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">' +
+            '                    </div>' +
+            '                </div>' +
+            '                <div class="form-group">' +
+            '                    <div class="input-group">' +
+            '                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>' +
+            '                        <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="basic-addon1">' +
+            '                    </div>' +
+            '                </div>' +
+            '                <div class="form-group">' +
+            '                    <div class="input-group">' +
+            '                        <span class="input-group-addon"><i class="fa fa-bars"></i></span>' +
+            '                        <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">' +
+            '                    </div>' +
+            '                </div>' +
+            '                <div class="form-group">' +
+            '                    <div class="input-group">' +
+            '                        <span class="input-group-addon"><i class="fa fa-repeat"></i></span>' +
+            '                        <input type="text" class="form-control" placeholder="Re-Password" aria-describedby="basic-addon1">' +
+            '                    </div>' +
+            '                </div>' +
+            '                <div class="checkbox">' +
+            '                    <label><input type="checkbox" name="remember"> Accept Terms, Condition & Privacy Policy</label>' +
+            '                </div>' +
+            '                <button type="submit" class="btn btn-lg btn-success btn-block ">Register</button>' +
+            '            </form>' +
+            '        </div>' +
+            '    </div>' +
+            '    <div class="row" style="margin-top: 20px;">' +
+            '        <div class="col-xs-8">' +
+            '            <p style="color: #ffffff;text-align: left;font-family: \'Century Gothic\';">Have an account ?</p>' +
+            '        </div>' +
+            '        <div class="col-xs-4">' +
+            '            <button class="btn btn-sm btn-default btn-block" id="btnFormLogin" style="background: transparent;border: 1px solid #fff;color: #fff;"><i class="fa fa-chevron-left margin-right"></i> Sign In</button>' +
+            '        </div>' +
+            '' +
+            '    </div>' +
+            '</div>';
+
+        $('#loadPage').html(pageLogin);
+        $('#loadPage').animateCss('flipInX');
+
+    });
+    //
+    // function loadingPage(element,fontColor){
+    //     var fc = (fontColor!='' && typeof fontColor !== "undefined") ? fontColor : '#333';
+    //     $(element).html('<div style="text-align:center;color: '+fc+';font-size: 20px;">' +
+    //         '<i class="fa fa-refresh fa-spin" style="margin-right: 5px;"></i> Loading . . .</div>');
+    // }
+
+
+    // === LOGIN ===
+
+    $(document).on('click','#btnActionLogin',function () {
+        localStorage.setItem('login',true);
+        window.location.replace('../template/template_customer.html?page=home&b_m=true');
+
+    });
+
+    // =============
+
+    $(document).on('click','#btnRegistration',function () {
+        $('#loadPage').animateCss('fadeOutLeft',function () {
+            $('#loadPage').html('<div style="color: #ffffff;">'+pageRegistration+'</div>');
+            $('#loadPage').animateCss('fadeInRight');
+        });
+    });
+
+    $(document).on('click','#btnFormLogin',function () {
+        $('#loadPage').animateCss('fadeOutRight',function () {
+            $('#loadPage').html('<div style="color: #ffffff;">'+pageLogin+'</div>');
+            $('#loadPage').animateCss('fadeInLeft');
+        });
+    })
+
+</script>

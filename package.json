@@ -1,0 +1,33 @@
+{
+  "name": "com.pegilagi.mobileapps",
+  "displayName": "pegiLagi",
+  "version": "1.0.0",
+  "description": "A mobile apps for tourism.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "animate.css": "^3.7.0",
+    "cordova-android": "^7.1.4",
+    "cordova-browser": "^5.0.4",
+    "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-stetho-android": "0.0.1",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sqlite-storage": "^2.5.2",
+    "select2-bootstrap-theme": "0.1.0-beta.10"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-geolocation": {}
+    },
+    "platforms": [
+      "browser",
+      "android"
+    ]
+  }
+}

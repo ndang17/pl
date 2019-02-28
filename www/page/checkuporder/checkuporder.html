@@ -1,0 +1,204 @@
+<style>
+    body {
+        padding-top: 0px;
+    }
+
+    .classDesc{
+        min-height: 10px;
+        background: lightyellow;
+        border: 2px dotted #377f8d;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    #navbar_Back {
+        background-color: #377f8d;
+        border-color: #377f8d;
+        /*margin-bottom: 60px;*/
+    }
+    #navbar_Back .navbar-brand {
+        color: #fff;
+        /*background: #174952;*/
+    }
+
+    #navbar_Back .navbar-brand:hover {
+        color: #fff !important;
+        background: #174952;
+    }
+
+    #navbar_Back .navbar-brand .fa {
+        margin-right: 5px;
+    }
+
+    #tablePrice th, #tablePrice td {
+        text-align: center;
+    }
+</style>
+
+<nav id="navbar_Back" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" id="btnBack" data-url="" href="javascrpt:void(0);">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="choice" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="classDesc">
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-map-marker margin-right"></i> Going to</span>
+                    <b id="viewKota">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-tags margin-right"></i> Preference</span>
+                    <b id="viewPrefrensi">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-calendar-check-o margin-right"></i> Arrive On</span>
+                    <b id="viewArriveOn">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-calendar-check-o margin-right"></i> Leave On</span>
+                    <b id="viewLeaveOn">-</b>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-user margin-right"></i> Customer</span>
+                    <b id="viewUser">Adult : <span id="viewAdult">0</span> | Children : <span id="viewchildren">0</span></b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="thumbnail price">
+                <table class="table table-striped" id="tablePrice">
+                    <thead>
+                    <tr>
+                        <th style="width: 25%;">Date</th>
+                        <th>Adult</th>
+                        <th>Children</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>12 Desc</td>
+                        <td style="text-align: right;">200.000,-</td>
+                        <td style="text-align: right;">100.000,-</td>
+                    </tr>
+                    <tr>
+                        <td>13 Desc</td>
+                        <td style="text-align: right;">200.000,-</td>
+                        <td style="text-align: right;">100.000,-</td>
+                    </tr>
+                    <tr>
+                        <td>14 Desc</td>
+                        <td style="text-align: right;">200.000,-</td>
+                        <td style="text-align: right;">100.000,-</td>
+                    </tr>
+
+                    <tr style="background: #377f8db8;color: #fff;font-weight: bold;">
+                        <td style="text-align: right;"></td>
+                        <td style="text-align: right;">600.000,-</td>
+                        <td style="text-align: right;">300.000,-</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div style="text-align: center;margin-bottom: 10px;font-weight: bold;color: #377f8d;font-size: 16px;">
+                    Total Price : 900.000, -
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        loadTransaction();
+    });
+
+    function loadTransaction(){
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM tr_customer', [], function(tx, rs) {
+                if(rs.rows.length>0){
+
+                    var data_transaction = jwt_decode(rs.rows.item(0).data_transaction,keyS);
+
+                    console.log(data_transaction);
+
+                    $('#viewKota').html(data_transaction._kota);
+
+                    var viewPrefrensi = '';
+                    if(data_transaction._preferensi.length>0){
+                        for(var t=0;t<data_transaction._preferensi.length;t++){
+                            var koma = (t!=0) ? ', ' : '';
+                            viewPrefrensi = viewPrefrensi+''+koma+''+data_transaction._preferensi[t];
+                        }
+                    }
+
+                    $('#viewPrefrensi').html(viewPrefrensi);
+
+                    // View Customer
+                    $('#viewAdult').html(data_transaction.adult);
+                    $('#viewchildren').html(data_transaction.children);
+
+                    $('#viewArriveOn').html(moment(data_transaction.arrive_on).format('dddd, DD MMM YYYY'));
+                    $('#viewLeaveOn').html(moment(data_transaction.leave_on).format('dddd, DD MMM YYYY'));
+
+                    $('#dataTemporary').val(JSON.stringify(data_transaction));
+                    $('#btnBack').attr('data-url',data_transaction._urlBack_3);
+
+                    var resultRangeDate = enumerateDaysBetweenDates(moment(data_transaction.arrive_on),moment(data_transaction.leave_on));
+                    console.log(resultRangeDate);
+                    if(resultRangeDate.length>0){
+                        for(var i=0;i<resultRangeDate.length;i++){
+                            setting_api.url = base_api_url+'listtarifkota?daftar_kota_id_daftar_kota='+data_transaction.tarif_daftar_kota_id_daftar_kota
+                                +'&date='+resultRangeDate[i];
+                            $.ajax(setting_api).done(function (jsonResult) {
+                                console.log(jsonResult);
+                            });
+                        }
+                    }
+                }
+            }, function(tx, e) {
+
+            });
+        });
+    }
+
+
+    $('#btnBack').click(function () {
+        var url = $(this).attr('data-url');
+        $("#loadPage").animateCss('slideOutRight',function () {
+            $("#loadPage").remove();
+            window.location.replace(url);
+        });
+    });
+
+    var enumerateDaysBetweenDates = function(startDate, endDate) {
+        var now = startDate, dates = [];
+
+        while (now.isSameOrBefore(endDate)) {
+            dates.push(now.format('YYYY-MM-DD'));
+            now.add(1, 'days');
+        }
+        return dates;
+    };
+
+    // var fromDate = moment('2018-12-07');
+    // var toDate   = moment('2018-12-17');
+    // var results = enumerateDaysBetweenDates(fromDate, toDate);
+    // console.log(results);
+</script>

@@ -1,0 +1,82 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../../images/icon/favicon.ico">
+    <title>Pegi Lagi | Splash Screen</title>
+
+
+
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif !important;
+            /*background: #fafafa;*/
+        }
+
+        .margin-left {
+            margin-left: 5px;
+        }
+        .margin-right {
+            margin-right: 5px;
+        }
+
+    </style>
+
+
+    <!--<script type="text/javascript" charset="utf-8" src="../../assets/bootstrap/cordova.js"></script>-->
+
+
+    <style>
+        .img-avatar {
+            max-width: 80px;
+        }
+        #choice {
+            width: 100%;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div id="include"></div>
+
+<div id="choice">
+    <div class="box">
+        <img src="../../images/icon/logo_pegilagi_c_shadow.png" class="img-avatar  animated infinite bounce"/>
+        <h1><b>PegiLagi</b></h1>
+    </div>
+</div>
+
+</body>
+<script src="../../assets/bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../../cordova.js"></script>
+<script>
+    $(document).ready(function () {
+
+    $('#include').load('../login/include_login.html',function () {
+
+        setTimeout(function () {
+            console.log(Customer_Login);
+            if(Customer_Login==true){
+                window.location.href = '../template/template_customer.html?page=home&b_m=true';
+            } else {
+                window.location.replace('../login/login.html');
+            }
+
+        },3000);
+    });
+
+});
+</script>
+</html>

@@ -1,0 +1,21 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.pegiLagi.mobileApps"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.pegiLagi.mobileApps"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.pegiLagi.mobileApps"
+    }
+  },
+  "dependent_plugins": {}
+}

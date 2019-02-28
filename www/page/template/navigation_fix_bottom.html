@@ -1,0 +1,131 @@
+<style>
+    .navbar-default {
+        background-color: #377f8d;
+        border-color: #377f8d;
+    }
+    .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav>li>a {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+        color: #ffffff;
+        background: #005ef7;
+    }
+
+    .navbar-fixed-bottom a {
+        color: #ffffff;
+        text-decoration: none;
+        text-align: center;
+        /*border-left: 1px solid #fff;*/
+        padding-top: 7px;
+    }
+
+    .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 5;
+        top: 0;
+        left: 0;
+        background-color: #607D8B;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
+
+    .navbar-active {
+        background: #174952;
+    }
+
+    .div-notif {
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        background: #ff1100;
+        color: #ffffff;
+        top: 1px;
+        right: 18px;
+        text-align: center;
+        font-size: 13px;
+        padding-top: 4px;
+        border-radius: 13px;
+    }
+</style>
+
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <a class="col-xs-3 menu-act-navigation" href="javascript:void(0);" data-page="home">
+                <i class="fa fa-home fa-2x"></i>
+                <br>
+                Home
+            </a>
+            <a class="col-xs-3 menu-act-navigation" href="javascript:void(0);" data-page="history">
+                <i class="fa fa-history fa-2x"></i>
+                <br>
+                History
+            </a>
+            <a class="col-xs-3 menu-act-navigation" href="javascript:void(0);" data-page="inbox">
+                <i class="fa fa-inbox fa-2x"></i>
+                <span id="viewCountNotif"></span>
+                <br>
+                Inbox
+            </a>
+            <a class="col-xs-3 menu-act-navigation" href="javascript:void(0);" data-page="profile">
+                <i class="fa fa-user fa-2x"></i>
+                <br>
+                Account
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.menu-act-navigation').removeClass('navbar-active');
+        var page = getUrlParameter('page');
+        $('a[data-page='+page+']').addClass('navbar-active');
+
+        var countInbox = $('#countInbox').val();
+        $('#viewCountNotif').html(countInbox);
+
+    });
+
+    $('.menu-act-navigation').click(function () {
+        var page = $(this).attr('data-page');
+        window.location.href = '../template/template_customer.html?page='+page+'&b_m=true';
+    });
+</script>

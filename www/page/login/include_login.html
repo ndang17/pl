@@ -1,0 +1,439 @@
+
+<link href="../../assets/bootstrap/css/bootstrap-social.css" rel="stylesheet" >
+
+
+<!-- Bootstrap core CSS -->
+<link href="../../assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<!-- Animate -->
+<link href="../../assets/animate/animate.css" rel="stylesheet">
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="../../assets/bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../../assets/bootstrap/css/signin.css" rel="stylesheet">
+<link href="../../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+<style>
+    .margin-left {
+        margin-left: 5px;
+    }
+    .margin-right {
+        margin-right: 5px;
+    }
+
+    .has-error, .help-block {
+        color: yellow;
+    }
+</style>
+
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="../../assets/bootstrap/js/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+
+<!-- JS file -->
+<script src="../../assets/bootstrap/js/jquery.easy-autocomplete.min.js"></script>
+
+<!-- CSS file -->
+<link rel="stylesheet" href="../../assets/bootstrap/css/easy-autocomplete.min.css" >
+
+<!-- Additional CSS Themes file - not required-->
+<link rel="stylesheet" href="../../assets/bootstrap/css/easy-autocomplete.themes.min.css">
+
+<!--<script type="text/javascript" charset="utf-8" src="../../assets/bootstrap/cordova.js"></script>-->
+
+<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+
+<!--Moment JS-->
+<script src="../../assets/moment/moment.js"></script>
+
+<!-- TOAS TR -->
+<link rel="stylesheet" href="../../assets/toastr/toastr.min.css">
+<script src="../../assets/toastr/toastr.min.js"></script>
+
+<!-- Validator -->
+<script src="../../assets/validator/validator.min.js"></script>
+
+<!-- Load AES & Providers -->
+<script src="../../assets/aes/aes.min.js"></script>
+<script src="../../assets/custom/js/providers.js"></script>
+
+<!-- JWT Encode -->
+<script src="../../assets/jwt/encode/hmac-sha256.js"></script>
+<script src="../../assets/jwt/encode/enc-base64-min.js"></script>
+<script src="../../assets/jwt/encode/jwt.encode.js"></script>
+
+<!-- JWT Decode -->
+<script src="../../assets/jwt/decode/build/jwt-decode.min.js"></script>
+
+<script>
+    window.pageLogin = '<div class="container" style="text-align: center;">' +
+        '        <form id="myForm" data-toggle="validator" role="form">' +
+        '        <div class="row">' +
+        '           <div class="col-md-12">' +
+        '            <div class="form-group has-feedback">' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon" id="basic-addon1">@</span>' +
+        '                    <input type="text" class="form-control fmLogin" id="formLoginUsername" placeholder="Username" required>' +
+        '                </div>' +
+        '                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '            </div>' +
+        '            <div class="form-group has-feedback">' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon" id="basic-addon2"><i class="fa fa-key"></i></span>' +
+        '                    <input type="password" class="form-control fmLogin" id="formLoginPassword" placeholder="Password" data-minlength="6" required>' +
+        '                </div>' +
+        '                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '            </div>' +
+        '            <button type="button" class="btn btn-lg btn-success btn-block" id="btnActionLogin" >Sign in</button>' +
+        '            <p style="text-align: right;margin-top: 10px;"><button class="btn btn-sm btn-warning">Did you forget your password ?</button></p>' +
+        '        </div>' +
+        '        <div class="" style="margin-top: 20px;">' +
+        '            <div class="col-md-12">' +
+        '                   <button type="button" class="btn btn-lg btn-block btn-social btn-facebook fmLogin">' +
+        '                   <span class="fa fa-facebook"></span> Sign in with Facebook' +
+        '               </button>' +
+        '            </div>' +
+        '        </div>' +
+        '        <div class="" style="margin-top: 20px;">' +
+        '            <div class="col-xs-8">' +
+        '                <p style="color: #ffffff;text-align: left;font-family: \'Century Gothic\';">Don\'t have an account ?</p>' +
+        '            </div>' +
+        '            <div class="col-xs-4">' +
+        '                <button type="button" class="btn btn-sm btn-default btn-block fmLogin" id="btnRegistration" style="background: transparent;border: 1px solid #fff;color: #fff;">Sign Up <i class="fa fa-chevron-right margin-left" aria-hidden="true"></i></button>' +
+        '            </div>' +
+        '        </div>' +
+        '        </div>' +
+        '        </form>' +
+        '        </div>' +
+        '</div>';
+
+    window.pageRegistration = '<div class="container">' +
+        '<div class="row">' +
+        '        <div class="col-md-12">' +
+        '            <h2 style="margin-top: 0px;">Create New Account</h2>' +
+        '               <form id="myForm" data-toggle="validator" role="form">' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-o"></i></span>' +
+        '                        <input type="text" class="form-control fm-register" id="formFirstName" placeholder="First Name" required>' +
+        '                    </div>' +
+        '                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-o"></i></span>' +
+        '                        <input type="text" class="form-control fm-register" id="formLastName" placeholder="Last Name" required>' +
+        '                    </div>' +
+        '                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon" id="basic-addon1">@</span>' +
+        '                        <input type="text" class="form-control fm-register" id="formUsername" placeholder="Username" required>' +
+        '                    </div>' +
+        '                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>' +
+        '                        <input type="email" class="form-control fm-register" id="formEmail" placeholder="E-mail" required>' +
+        '                    </div>' +
+        '                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>' +
+        '                        <input type="text" class="form-control fm-register" id="formPhoneNumber" placeholder="Phone Number" required>' +
+        '                    </div>' +
+        '                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon"><i class="fa fa-key"></i></span>' +
+        '                        <input type="password" class="form-control fm-register" data-minlength="6" id="formPassword" placeholder="Password" required>' +
+        '                    </div>' +
+        '                   <div class="help-block">Minimum of 6 characters</div>' +
+        '                </div>' +
+        '                <div class="form-group has-feedback">' +
+        '                    <div class="input-group">' +
+        '                        <span class="input-group-addon"><i class="fa fa-repeat"></i></span>' +
+        '                        <input type="password" class="form-control fm-register" id="formRePassword" data-match="#formPassword" data-match-error="Whoops, these don\'t match" placeholder="Re-Password" required>' +
+        '                    </div>' +
+        '                   <div class="help-block with-errors"></div>' +
+        '                </div>' +
+        '                <div class="checkbox">' +
+        '                    <label><input type="checkbox" id="formPolicy" name="remember"> Accept Terms, Condition & Privacy Policy</label>' +
+        '                </div>' +
+        '                <button type="button" id="btnActionRegistration" class="btn btn-lg btn-success btn-block ">Register</button>' +
+        '               </form>' +
+        '           </div>' +
+        '    </div>' +
+        '    <div class="row" style="margin-top: 20px;">' +
+        '        <div class="col-xs-8">' +
+        '            <p style="color: #ffffff;text-align: left;font-family: \'Century Gothic\';">Have an account ?</p>' +
+        '        </div>' +
+        '        <div class="col-xs-4">' +
+        '            <button class="btn btn-sm btn-default btn-block" id="btnFormLogin" style="background: transparent;border: 1px solid #fff;color: #fff;"><i class="fa fa-chevron-left margin-right"></i> Sign In</button>' +
+        '        </div>' +
+        '' +
+        '    </div>' +
+        '</div>';
+
+    $.fn.extend({
+        animateCss: function(animationName, callback) {
+            var animationEnd = (function(el) {
+                var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                };
+
+                for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                        return animations[t];
+                    }
+                }
+            })(document.createElement('div'));
+
+            this.addClass('animated ' + animationName).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationName);
+
+                if (typeof callback === 'function') callback();
+            });
+
+            return this;
+        },
+    });
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-left",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    function loading_buttonSM(element) {
+        $(element).prop('disabled',true).html('<i class="fa fa-refresh fa-spin"></i>');
+    }
+
+    function loading_button(element) {
+        $(element).prop('disabled',true).html('<i class="fa fa-refresh fa-spin" style="margin-right: 5px;"></i> Loading...');
+    }
+
+    function loadingPage(element,fontColor){
+        var fc = (fontColor!='' && typeof fontColor !== "undefined") ? fontColor : '#333';
+        $(element).html('<div style="text-align:center;color: '+fc+';font-size: 20px;">' +
+            '<i class="fa fa-refresh fa-spin" style="margin-right: 5px;"></i> Loading . . .</div>');
+    }
+
+    function getDateTimeNow(){
+        return moment().format('YYYY-MM-DD HH:mm:ss');
+    }
+
+
+    // === LOGIN ===
+
+    $(document).on('click','#btnFormLogin',function () {
+        $('#loadPage').animateCss('fadeOutRight',function () {
+            $('#loadPage').html('<div style="color: #ffffff;">'+pageLogin+'</div>');
+            $('#loadPage').animateCss('fadeInLeft');
+            $('#formLoginUsername').focus();
+            $('#myForm').validator();
+        });
+    });
+
+    $(document).on('click','#btnActionLogin',function () {
+
+        var formLoginUsername = $('#formLoginUsername').val();
+        var formLoginPassword = $('#formLoginPassword').val();
+
+        if(formLoginUsername!='' && formLoginUsername!=null &&
+            formLoginPassword!='' && formLoginPassword!=null){
+
+            loading_button('#btnActionLogin');
+            $('.fmLogin').prop('disabled',true);
+
+            setting_api.method = 'GET';
+            setting_api.url = base_api_url+'login';
+            setting_api.beforeSend = function( xhr ) {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa(formLoginUsername+":"+formLoginPassword));
+            };
+            setting_api.error = function () {
+                toastr.error('Username and password not match','Error');
+                setTimeout(function () {
+                    $('#btnActionLogin').html('Sign In');
+                    $('.fmLogin,#btnActionLogin').prop('disabled',false);
+                },500);
+            };
+
+
+            $.ajax(setting_api).done(function (response) {
+
+                var dataLog = {
+                    Encrypt1 :encryption(response).toString(),
+                    Encrypt2 :encryption(formLoginUsername).toString(),
+                    Encrypt3 :encryption(formLoginPassword).toString()
+                };
+
+                var tDL = jwt_encode(dataLog,keyS+''+keyS);
+
+                // Mendapatkan Profile
+                setting_api.method = 'GET';
+                setting_api.url = base_api_url+'profile';
+                setting_api.beforeSend = function( xhr ) {
+                    xhr.setRequestHeader ("Authorization", "Basic " + btoa(formLoginUsername+":"+formLoginPassword));
+                };
+
+                $.ajax(setting_api).done(function (responseProfile) {
+
+                    var token_P = jwt_encode(responseProfile,keyS+''+keyS);
+                    var desc_P = encryption('profile').toString();
+
+                    db.transaction(function(tx) {
+                        tx.executeSql('INSERT INTO db_log VALUES (?,?,?)', [tDL,getDateTimeNow(), 1]);
+                        tx.executeSql('INSERT INTO db_user VALUES (?,?)', [token_P,desc_P]);
+                    }, function(e) {
+                        // console.log('Transaction Create Table ERROR: ' + e.message);
+                    }, function() {
+                        // console.log('Populated database OK');
+                    });
+
+
+                    setTimeout(function () {
+
+                        var token = jwt_encode({login:true,loginAt : getDateTimeNow()},keyS);
+                        var spT = token.split('.');
+
+                        localStorage.setItem('hascy',spT[0]);
+                        localStorage.setItem('fascy',spT[2]);
+                        localStorage.setItem('token',spT[1]);
+
+                        window.location.replace('../template/template_customer.html?page=home&b_m=true');
+                    },500);
+
+                });
+
+            });
+
+        }
+        else {
+            toastr.error('Username & Password is required','Form Required');
+        }
+    });
+
+
+
+    // ==== REGISTRATION ===
+
+    $(document).on('click','#btnRegistration',function () {
+        $('#loadPage').animateCss('fadeOutLeft',function () {
+            $('#loadPage').html('<div style="color: #ffffff;">'+pageRegistration+'</div>');
+            $('#loadPage').animateCss('fadeInRight');
+            $('#myForm').validator();
+        });
+    });
+
+    $(document).on('click','#btnActionRegistration',function () {
+
+        var formFirstName = $('#formFirstName').val();
+        var formLastName = $('#formLastName').val();
+        var formUsername = $('#formUsername').val();
+
+        var formEmail = $('#formEmail').val();
+        var formPhoneNumber = $('#formPhoneNumber').val();
+        var formPassword = $('#formPassword').val();
+        var formRePassword = $('#formRePassword').val();
+
+        if(formFirstName !='' && formFirstName!=null &&
+            formLastName !='' && formLastName!=null &&
+            formUsername !='' && formUsername!=null &&
+            formEmail!='' && formEmail!=null &&
+            formPhoneNumber!='' && formPhoneNumber!=null &&
+            formPassword!='' && formPassword!=null &&
+            formRePassword!='' && formRePassword!=null){
+
+            if(formPassword==formRePassword){
+
+                $('.fm-register').prop('disabled',true);
+                loading_button('#btnActionRegistration');
+
+                toastr.success('to validate your account, please check your email','Register Success');
+
+                setting_api.method = 'POST';
+                setting_api.contentType = 'application/json';
+                setting_api.url = base_api_url+'signup';
+                setting_api.data = JSON.stringify([{
+                    username : formUsername.trim(),
+                    email : formEmail.trim(),
+                    password : formPassword.trim(),
+                    nomor_handphone : formPhoneNumber.trim(),
+                    nama_depan : formFirstName.trim(),
+                    nama_belakang : formLastName.trim()
+                }]);
+                setting_api.beforeSend = '';
+
+                $.ajax(setting_api).done(function (jsonResult) {
+                    // console.log(jsonResult);
+                    setTimeout(function () {
+                        $('#loadPage').animateCss('fadeOutRight',function () {
+                            $('#loadPage').html('<div style="color: #ffffff;">'+pageLogin+'</div>');
+                            $('#formLoginUsername').focus();
+                            $('#loadPage').animateCss('fadeInLeft');
+                        });
+                    },500);
+                });
+
+            } else {
+                toastr.error('Password & Re-Password not match','Error');
+            }
+
+
+
+        } else {
+            toastr.error('All form is required','Form Required');
+        }
+
+    });
+
+
+    // To get API Dari Pak Freddo
+    // function getData(sourseUrl) {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append('Authorization', 'Basic ' + btoa('admin:adminadmin'));
+    //     fetch(sourseUrl, {
+    //         method: "GET",
+    //         credentials: "same-origin",
+    //         headers: myHeaders
+    //     }).then(function (response) {
+    //         return response.json();
+    //     }).then(function (jsonResult) {
+    //         console.log(jsonResult);
+    //     });
+    // }
+</script>

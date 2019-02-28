@@ -1,0 +1,138 @@
+
+<nav id="navbar_Back" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="template_customer.html?page=profile&b_m=true">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 0px;margin-bottom: 40px;">
+
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+          <div class="thumbnail" style="padding: 5px;">
+              <textarea id="viewCustomer" class="hide" readonly></textarea>
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <th>Customer</th>
+                      <th style="width: 5%;">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody id="rowUser"></tbody>
+              </table>
+          </div>
+      </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        loadCustomer();
+    });
+
+    function loadCustomer() {
+        setting_api.method = 'GET';
+        setting_api.url = base_api_url+'historypeserta ';
+
+        $('#rowUser').empty();
+        $.ajax(setting_api).done(function (result) {
+
+            $('#viewCustomer').val(result);
+            var jsonResult = JSON.parse(result);
+
+            if(jsonResult.length>0){
+                $.each(jsonResult,function (i,v) {
+                    $('#rowUser').append('<tr>' +
+                        '<td>'+v.nama_depan.trim()+' '+v.nama_belakang.trim()+'</td>' +
+                        '<td><button class="btn btn-sm btn-default showDetails" data-id="'+i+'">Details</button></td>' +
+                        '</tr>');
+                });
+            } else {
+                $('#rowUser').append('<tr><td colspan="2" style="text-align: center;">Customer not yet</td></tr>');
+            }
+
+        });
+    }
+
+    $(document).on('click','.showDetails',function () {
+
+        var ID = $(this).attr('data-id');
+        var result = $('#viewCustomer').val();
+        var jsonResult = JSON.parse(result);
+
+        var d = jsonResult[ID];
+
+        var gender = (d.jenis_kelamin_id_jenis_kelamin==1 || d.jenis_kelamin_id_jenis_kelamin=='1')
+            ? 'Male' : 'Female';
+
+        var nomor_identitas_ektp = (d.nomor_identitas_ektp!='' && d.nomor_identitas_ektp!=null) ? d.nomor_identitas_ektp : '-';
+        var nomor_identitas_visa = (d.nomor_identitas_visa!='' && d.nomor_identitas_visa!=null) ? d.nomor_identitas_visa : '-';
+        var nomor_identitas_passport = (d.nomor_identitas_passport!='' && d.nomor_identitas_passport!=null) ? d.nomor_identitas_passport : '-';
+        var nomor_telp = (d.nomor_telp!='' && d.nomor_telp!=null) ? d.nomor_telp : '-';
+        var email = (d.email!='' && d.email!=null) ? d.email : '-';
+
+        var dateOfBirth = (d.tanggal_lahir!='' && d.tanggal_lahir!=null) ? moment(d.tanggal_lahir).format('ddd, DD MMM YYYY') : '-';
+
+        $('#myModal .modal-header, #myModal .modal-footer').addClass('hide');
+
+        $('#myModal .modal-body').html('<div class="row">' +
+            '        <div class="col-md-12">' +
+            '            <table class="table table-striped">' +
+            '                <tr>' +
+            '                    <td style="width: 25%;">Name</td>' +
+            '                   <td style="width: 1%;">:</td>' +
+            '                    <td>'+d.nama_depan.trim()+' '+d.nama_belakang.trim()+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>Gender</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+gender+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>Date Of Bisrt</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+dateOfBirth+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>E-KTP</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+nomor_identitas_ektp+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>Visa</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+nomor_identitas_visa+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>Passport</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+nomor_identitas_passport+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>Phone</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+nomor_telp+'</td>' +
+            '                </tr>' +
+            '                <tr>' +
+            '                    <td>E-mail</td>' +
+            '                   <td>:</td>' +
+            '                    <td>'+email+'</td>' +
+            '                </tr>' +
+            '            </table>' +
+            '<div style="text-align: right;">' +
+            '   <button class="btn btn-default" data-dismiss="modal">Close</button>' +
+            '</div>' +
+            '        </div>' +
+            '    </div>');
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard: false
+        });
+    });
+</script>

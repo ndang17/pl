@@ -1,0 +1,619 @@
+
+<style>
+    body {
+        padding-top: 0px;
+    }
+
+    .classDesc{
+        min-height: 10px;
+        background: lightyellow;
+        border: 2px dotted #377f8d;
+        padding: 10px;
+    }
+    .datepicker-inline {
+        width: 100%;
+    }
+    .datepicker table {
+        width: 100%;
+    }
+
+    .date-title {
+        font-weight: bold;padding-bottom: 5px;
+        border-bottom: 1px solid #cccccc;color: #377f8d;
+    }
+
+    .view-date {
+        font-size: 2em;font-weight: bold;
+    }
+
+    .view-month {
+        font-size: 12px;
+    }
+
+    .panelCalendar {
+        cursor: pointer;
+    }
+
+    h4.header-blue {
+        border-left: 7px solid #00bcd4;padding-left: 5px;
+    }
+
+    h4.header-orange {
+        border-left: 7px solid orangered;padding-left: 5px;
+    }
+</style>
+
+<nav id="navbar_Back" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" id="btnBack" data-url="" href="javascrpt:void(0);">
+                <i class="fa fa-arrow-circle-left"></i> Back
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" id="formRequirement" style="margin-top: 80px;">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="classDesc">
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-map-marker margin-right"></i> Going to</span>
+                    <b id="viewKota">-</b>
+                    <input id="tarif_daftar_kota_id_daftar_kota" class="hide" readonly>
+                    <hr/>
+                </div>
+                <div>
+                    <span style="color: #377f8d;"><i class="fa fa-tags margin-right"></i> Preference</span>
+                    <b id="viewPrefrensi">-</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 15px;">
+            <h3 style="text-align: center;color: #377f8d;font-weight: bold;">Please fill your requirement</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-xs-6 panelCalendar" id="panelCalendar_Arrive" data-on="1" data-date="" data-title="Arrive On">
+                    <div class="thumbnail" style="padding: 10px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="date-title"><i class="fa fa-calendar-o margin-right"></i> Arrive On</div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 7px;">
+                            <input id="formArriveDate" class="hide" readonly />
+                            <div class="col-xs-4" style="border-right: 1px solid #cccccc;">
+                                <span class="view-date" id="viewArrive_Date">-</span>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="view-month" id="viewArrive_Month">-</div>
+                                <span id="viewArrive_Day">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-6 panelCalendar" id="panelCalendar_Leave" data-on="2" data-date="" data-title="Leave On">
+                    <div class="thumbnail" style="padding: 10px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="date-title"><i class="fa fa-calendar-o margin-right"></i> Leave On</div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 7px;">
+                            <input id="formLeaveDate" class="hide" readonly />
+                            <div class="col-xs-4" style="border-right: 1px solid #cccccc;">
+                                <span class="view-date" id="viewLeave_Date">-</span>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="view-month" id="viewLeave_Month">-</div>
+                                <span id="viewLeave_Day">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="thumbnail" style="padding:10px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div style="font-weight: bold;padding-bottom: 5px;border-bottom: 1px solid #cccccc;color: #377f8d;">
+                                    Adult
+                                    <br/>
+                                    <span style="color: #9e9e9e;font-size: 11px;font-weight: normal;">*) &gt; 4 years old</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px;">
+                            <div class="col-xs-4" style="text-align: center;">
+                                <img src="../../images/icon/adult.png" style="width: 100%;max-width: 50px;">
+                            </div>
+                            <div class="col-xs-8">
+                                <select id="formAdult" class="form-control">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="thumbnail" style="padding:10px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div style="font-weight: bold;padding-bottom: 5px;border-bottom: 1px solid #cccccc;color: #377f8d;">
+                                    Children
+                                    <br/>
+                                    <span style="color: #9e9e9e;font-size: 11px;font-weight: normal;">*) &le; 4 years old</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px;">
+                            <div class="col-xs-4" style="text-align: center;">
+                                <img src="../../images/icon/children.png" style="width: 100%;max-width: 50px;">
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" id="formChildren">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="thumbnail">
+                <h4 class="header-blue">Pick-up service</h4>
+                <hr style="margin-top:13px;"/>
+                <div style="padding: 10px;padding-top: 0px;">
+                    <div class="date-title" style="border-bottom: none;">Location</div>
+                    <textarea class="form-control" id="formPickUpLocation" rows="3"></textarea>
+
+                    <div class="row" style="margin-top:15px;">
+                        <div class="col-xs-6">
+                            <div class="date-title" style="border-bottom: none;">Hours</div>
+                            <select class="form-control" id="formPickUpHours"></select>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="date-title" style="border-bottom: none;">Minutes</div>
+                            <select class="form-control" id="formPickUpMinutes"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="thumbnail" id="divLanguage">
+                <h4 class="header-blue">Select Language</h4>
+                <hr style="margin-top:13px;"/>
+                <div style="padding: 10px;padding-top: 0px;" id="showListLanguage"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-bars margin-right"></i> Jasa Tambahan</h4>
+                </div>
+                <div class="panel-body">
+                    Jadikan perjalanan Anda lebih praktis dengan memesan tambahan dibagian Detail Pemesanan (<i>Special Requirement</i>)
+                    pada halaman pemesanan.
+                    <ul>
+                        <li>Tambahan yang dipesan sekarang berlaku untuk sepanjang periode rental</li>
+                        <li>Tambahan juga dapat dilakukan dan dibayarkan langsung kepada sopir pada saat perjalanan</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="thumbnail">
+                <h4 class="header-orange">Special Requirements</h4>
+                <hr style="margin-top:13px;"/>
+                <div style="padding: 10px;padding-top: 0px;">
+                    <textarea class="form-control" id="formSpecialRequirement" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row hide divBtnSubmit">
+        <div class="col-md-8 col-md-offset-2">
+            <button class="btn btn-lg btn-success btn-block" id="btnSubmitRequirement">Submit</button>
+        </div>
+    </div>
+
+</div>
+
+<textarea id="dataTemporary" class="hide" readonly rows="3"></textarea>
+
+<script>
+    $(document).ready(function () {
+
+        window.moment_dateDefault_Arrive = moment().add(3,'day');
+        window.moment_dateDefault_Leave = moment().add(6,'day');
+
+
+        window.totalLanguage = 0;
+
+        loadPanggilan();
+
+        // Load Hours
+        for(var h=0;h<24;h++){
+            var tm = (h<=9) ? '0'+h : h;
+            $('#formPickUpHours').append('<option value="'+tm+'">'+tm+'</option>');
+        }
+
+        // Load Minuts
+        for(var m=0;m<60;m++){
+            var tm = (m<=9) ? '0'+m : m;
+            $('#formPickUpMinutes').append('<option value="'+tm+'">'+tm+'</option>');
+        }
+
+        loadTransaction();
+
+    });
+
+    $(document).on('click','.panelCalendar',function () {
+        var title = $(this).attr('data-title');
+        var on = $(this).attr('data-on');
+        var date = $(this).attr('data-date');
+
+        $('#myModal .modal-header,#myModal .modal-footer').addClass('hide');
+        $('#myModal .modal-body').html('<h3>'+title+'</h3><hr/><div id="datepicker" data-date="'+date+'"></div>' +
+            '                <input type="hidden" id="my_hidden_input">' +
+            '<hr/>' +
+            '<div style="text-align: right;">' +
+            '<button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>' +
+            '</div> ');
+
+        var st = '+3d';
+        if(on==2 || on=='2'){
+            st = $('#formArriveDate').val();
+        }
+        var startDate = (on==1 || on=='1') ? '+3d' : st;
+
+        $('#datepicker').datepicker({
+            todayHighlight : true,
+            format : 'yyyy-mm-dd',
+            startDate : startDate
+        });
+        $('#datepicker').on('changeDate', function() {
+
+            var d_Date = (on==1 || on=='1') ? '#viewArrive_Date' : '#viewLeave_Date';
+            var d_Month = (on==1 || on=='1') ? '#viewArrive_Month' : '#viewLeave_Month';
+            var d_Day = (on==1 || on=='1') ? '#viewArrive_Day' : '#viewLeave_Day';
+            var panelCalendar = (on==1 || on=='1') ? '#panelCalendar_Arrive' : '#panelCalendar_Leave';
+            var formType = (on==1 || on=='1') ? '#formArriveDate' : '#formLeaveDate';
+
+            var valueDatePick = $('#datepicker').datepicker('getFormattedDate');
+            var valueDatePick_split = valueDatePick.split('-');
+
+            var m = moment().date(valueDatePick_split[2]).month((parseInt(valueDatePick_split[1])-1))
+                .year(valueDatePick_split[0]);
+
+            $(d_Date).html(m.format('DD'));
+            $(d_Month).html(m.format('MMM YYYY'));
+            $(d_Day).html(m.format('dddd'));
+
+            $(panelCalendar).attr('data-date',valueDatePick);
+            $(formType).val(valueDatePick);
+
+        });
+
+        $('#myModal').modal({
+            backdrop : 'static',
+            keyboard : false,
+            show : true
+        });
+
+    });
+
+    $('#btnBack').click(function () {
+        var url = $(this).attr('data-url');
+        $("#loadPage").animateCss('fadeOut',function () {
+            $("#loadPage").remove();
+            window.location.replace(url);
+        });
+    });
+
+    function loadTransaction(){
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM tr_customer', [], function(tx, rs) {
+                if(rs.rows.length>0){
+
+                    var data_transaction = jwt_decode(rs.rows.item(0).data_transaction,keyS);
+
+                    $('#viewKota').html(data_transaction._kota);
+                    $('#tarif_daftar_kota_id_daftar_kota').val(data_transaction.tarif_daftar_kota_id_daftar_kota);
+
+                    var viewPrefrensi = '';
+                    if(data_transaction._preferensi.length>0){
+                        for(var t=0;t<data_transaction._preferensi.length;t++){
+                            var koma = (t!=0) ? ', ' : '';
+                            viewPrefrensi = viewPrefrensi+''+koma+''+data_transaction._preferensi[t];
+                        }
+                    }
+
+                    $('#viewPrefrensi').html(viewPrefrensi);
+
+                    $('#dataTemporary').val(JSON.stringify(data_transaction));
+                    $('#btnBack').attr('data-url',data_transaction._urlBack_2);
+
+                    $('.divBtnSubmit').removeClass('hide');
+
+
+                    // Cek apakah back atau bukan
+                    if(typeof data_transaction.arrive_on !== 'undefined' && data_transaction.arrive_on!=''
+                        && data_transaction.arrive_on!=null && data_transaction.arrive_on!='0000-00-00'){
+                        moment_dateDefault_Arrive = moment(data_transaction.arrive_on);
+                    }
+                    if(typeof data_transaction.leave_on !== 'undefined' && data_transaction.leave_on!=''
+                        && data_transaction.leave_on!=null && data_transaction.leave_on!='0000-00-00'){
+                        moment_dateDefault_Leave = moment(data_transaction.leave_on);
+                    }
+
+
+                    $('#viewArrive_Date').html(moment_dateDefault_Arrive.format('DD'));
+                    $('#viewArrive_Month').html(moment_dateDefault_Arrive.format('MMM YYYY'));
+                    $('#viewArrive_Day').html(moment_dateDefault_Arrive.format('dddd'));
+
+
+                    $('#viewLeave_Date').html(moment_dateDefault_Leave.format('DD'));
+                    $('#viewLeave_Month').html(moment_dateDefault_Leave.format('MMM YYYY'));
+                    $('#viewLeave_Day').html(moment_dateDefault_Leave.format('dddd'));
+
+
+                    $('#panelCalendar_Arrive').attr('data-date',moment_dateDefault_Arrive.format('YYYY-MM-DD'));
+                    $('#formArriveDate').val(moment_dateDefault_Arrive.format('YYYY-MM-DD'));
+
+                    $('#panelCalendar_Leave').attr('data-date',moment_dateDefault_Leave.format('YYYY-MM-DD'));
+                    $('#formLeaveDate').val(moment_dateDefault_Leave.format('YYYY-MM-DD'));
+
+
+                    if(typeof data_transaction.adult !== 'undefined' &&
+                        data_transaction.adult!='' &&
+                        data_transaction.adult!=null){
+                        $('#formAdult').val(data_transaction.adult);
+                    }
+
+                    if(typeof data_transaction.children !== 'undefined' &&
+                        data_transaction.children!='' &&
+                        data_transaction.children!=null){
+                        $('#formChildren').val(data_transaction.children);
+                    }
+
+                    if(typeof data_transaction.lokasi_penjemputan !== 'undefined' &&
+                        data_transaction.lokasi_penjemputan!='' &&
+                        data_transaction.lokasi_penjemputan!=null){
+                        $('#formPickUpLocation').val(data_transaction.lokasi_penjemputan);
+                    }
+
+                    if(typeof data_transaction.waktu_penjemputan !== 'undefined' &&
+                        data_transaction.waktu_penjemputan!='' &&
+                        data_transaction.waktu_penjemputan!=null){
+                        var timeSplit = data_transaction.waktu_penjemputan.split(':');
+                        $('#formPickUpHours').val(timeSplit[0].trim());
+                        $('#formPickUpMinutes').val(timeSplit[1].trim());
+
+                    }
+
+                    if(typeof data_transaction.list_language !== 'undefined' &&
+                        data_transaction.list_language.length > 0){
+                    }
+
+                    setting_api.url = base_api_url+'listbahasa ';
+                    $.ajax(setting_api).done(function (result) {
+                        var jsonResult = JSON.parse(result);
+
+                        if(jsonResult.length>0){
+                            totalLanguage = jsonResult.length;
+                            for(var i=0;i<jsonResult.length;i++){
+                                var d = jsonResult[i];
+
+                                var ck = '';
+                                if(typeof data_transaction.list_language !== 'undefined' &&
+                                    data_transaction.list_language.length > 0){
+
+                                    ck = ($.inArray(''+d.id_daftar_bahasa,data_transaction.list_language)!=-1)
+                                        ? 'checked' : '';
+                                }
+
+
+                                $('#showListLanguage').append('<div class="checkbox">' +
+                                    '                        <label>' +
+                                    '                            <input type="checkbox" '+ck+' class="formSelectLanguage" id="formLang'+i+'" value="'+d.id_daftar_bahasa+'"> '+d.keterangan_bahasa+' ' +
+                                    '                        </label>' +
+                                    '                    </div>');
+                            }
+                        }
+
+                    });
+
+                    if(typeof data_transaction.special_requirement !== 'undefined' &&
+                        data_transaction.special_requirement!='' &&
+                        data_transaction.special_requirement!=null){
+                        $('#formSpecialRequirement').val(data_transaction.special_requirement);
+                    }
+
+
+
+                    // ==========
+
+                    $('#viewArrive').html(moment_dateDefault_Arrive.format('DD MMMM YYYY'));
+                    $('#viewLeave').html(moment_dateDefault_Leave.format('DD MMMM YYYY'));
+
+                    $('#btnActDateArrive').attr('data-date',moment_dateDefault_Arrive.format('MM/DD/YYYY'));
+                    $('#btnActDateLeave').attr('data-date',moment_dateDefault_Leave.format('MM/DD/YYYY'));
+
+
+                }
+            }, function(tx, e) {
+
+            });
+        });
+    }
+
+    $('#btnSubmitRequirement').click(function () {
+
+        var dataTr = JSON.parse($('#dataTemporary').val());
+
+        var adult = parseInt($('#formAdult').val());
+        var children = parseInt($('#formChildren').val());
+
+        var formArriveDate = $('#formArriveDate').val();
+        var formLeaveDate = $('#formLeaveDate').val();
+
+        var formPickUpLocation = $('#formPickUpLocation').val();
+        formReq('#formPickUpLocation',formPickUpLocation);
+        var formPickUpHours = $('#formPickUpHours').val();
+        var formPickUpMinutes = $('#formPickUpMinutes').val();
+
+        var special_requirement = $('#formSpecialRequirement').val();
+
+        if(adult!='' && adult!=null && adult>0 &&
+            formArriveDate!='' && formArriveDate!=null &&
+            formLeaveDate!='' && formLeaveDate!=null &&
+            formPickUpLocation !='' && formPickUpLocation!=null &&
+            formPickUpHours !='' && formPickUpHours!=null &&
+            formPickUpMinutes !='' && formPickUpMinutes!=null){
+
+            if(new Date(formArriveDate) <= new Date(formLeaveDate))
+            {//compare end <=, not >=
+
+                var arr_language = [];
+                // Cek apakah bahasa ada yang dipilih atau engga
+                for(var b=0;b<totalLanguage;b++){
+                    if ($('#formLang'+b).is(':checked')) {
+                        arr_language.push($('#formLang'+b).val());
+                    }
+                }
+
+                if(arr_language.length>0){
+
+                    processing_button('#btnSubmitRequirement');
+
+                    dataTr.arrive_on = formArriveDate;
+                    dataTr.leave_on = formLeaveDate;
+
+                    dataTr.list_language = arr_language;
+
+                    dataTr.adult = adult;
+                    dataTr.children = children;
+
+                    dataTr.jumlah_detail_orang = adult;
+
+                    dataTr.lokasi_penjemputan = formPickUpLocation;
+                    dataTr.waktu_penjemputan = formPickUpHours+':'+formPickUpMinutes;
+
+                    dataTr.special_requirement = special_requirement;
+
+                    dataTr._urlBack_3 = 'template_customer.html?page=requirement';
+
+                    // Get Tarif
+                    var tarif_daftar_kota_id_daftar_kota = parseInt($('#tarif_daftar_kota_id_daftar_kota').val());
+                    setting_api.url = base_api_url+'tarifratarata?arriveon='+formArriveDate+
+                        '&leaveon='+formLeaveDate+'&kotaid='+tarif_daftar_kota_id_daftar_kota;
+
+                    $.ajax(setting_api).done(function (result) {
+                        // var jsonResult = JSON.parse(result);
+                        dataTr.tarif_rata_rata = parseFloat(result);
+                        dataTr._tarif_rata_rata = formatRupiah(parseFloat(result));
+
+                        db.transaction(function(tx) {
+
+                            var data_transaction = jwt_encode(dataTr,keyS);
+                            tx.executeSql('DROP TABLE IF EXISTS tr_customer');
+                            // E1 = ID, E2 = Username, E3 = Password
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS tr_customer (data_transaction)');
+                            tx.executeSql('INSERT INTO tr_customer VALUES (?)', [data_transaction]);
+
+                            // window.location.href = 'template_customer.html?page=checkuporder';
+                            window.location.href = 'template_customer.html?page=customer';
+
+                        }, function(e) {
+                            // console.log('Transaction Create Table ERROR: ' + e.message);
+                        }, function() {
+                            // console.log('Populated database OK');
+                        });
+
+                    });
+                } else {
+                    $('#divLanguage').css('border','1px solid red');
+                    toastr.warning('Pleace select language','Warning');
+                    setTimeout(function () {
+                        $('#divLanguage').css('border','1px solid #ccc');
+                    },3000);
+                }
+
+            } else {
+                $('#panelCalendar_Leave .thumbnail').css('border','1px solid red');
+                toastr.warning('Leave date must be more than the date of arrive','Warning');
+                setTimeout(function () {
+                    $('#panelCalendar_Leave .thumbnail').css('border','1px solid #ccc');
+                },3000);
+            }
+
+
+        }
+        else {
+            toastr.warning('Form required','Warning');
+        }
+
+    });
+
+    function loadPanggilan() {
+
+        var ArrPanggilan = localStorage.getItem('ArrPanggilan');
+
+        if(ArrPanggilan!=null && ArrPanggilan!=''){
+            var jsonArrp = JSON.parse(ArrPanggilan);
+            if(jsonArrp.length<0){
+                setting_api.method = 'GET';
+                setting_api.url = base_api_url+'listpanggilan';
+                $.ajax(setting_api).done(function (result) {
+                    localStorage.setItem('ArrPanggilan',result);
+                });
+            }
+        } else {
+            setting_api.method = 'GET';
+            setting_api.url = base_api_url+'listpanggilan';
+            $.ajax(setting_api).done(function (result) {
+                localStorage.setItem('ArrPanggilan',result);
+            });
+        }
+
+
+    }
+
+</script>

@@ -1,0 +1,56 @@
+
+
+<!--<pre><div id="result-json">JSON result will appear here after payment:<br></div></pre>-->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+       loadTransaction();
+    });
+
+    function loadTransaction(){
+        db.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM tr_customer', [], function(tx, rs) {
+                if(rs.rows.length>0){
+
+                    var data_transaction = jwt_decode(rs.rows.item(0).data_transaction,keyS);
+
+                    snap.pay(''+data_transaction.PaymentToken, {
+                        // Optional
+                        onSuccess: function (result) {
+                            /* You may add your own js here, this is just example */
+                            // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        },
+                        // Optional
+                        onPending: function (result) {
+                            /* You may add your own js here, this is just example */
+                            // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        },
+                        // Optional
+                        onError: function (result) {
+                            /* You may add your own js here, this is just example */
+                            // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                        }
+                    });
+
+
+                    // $('#viewPrefrensi').html(viewPrefrensi);
+                    //
+                    // // View Customer
+                    // $('#viewAdult').html(data_transaction.adult);
+                    // $('#viewchildren').html(data_transaction.children);
+                    //
+                    //
+                    // $('.divBtnSubmit').removeClass('hide');
+                }
+            }, function(tx, e) {
+
+            });
+        });
+    }
+
+    // document.getElementById('pay-button').onclick = function () {
+    //     // SnapToken acquired from previous step
+    //
+    // };
+</script>
